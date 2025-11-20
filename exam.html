@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Exam - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/exam.css">
+</head>
+
+<body>
+    <!-- Exam Mode Selection Screen -->
+    <div id="modeSelection" class="mode-selection">
+        <div class="mode-container">
+            <h1 class="exam-title">📝 Interview Prep Exam</h1>
+            <p class="exam-subtitle">Test your knowledge with multiple-choice questions</p>
+
+            <div class="mode-grid">
+                <div class="mode-card" onclick="startExam('quick')">
+                    <div class="mode-icon">⚡</div>
+                    <h3>Quick Test</h3>
+                    <p>10 random questions</p>
+                    <span class="mode-time">~5 minutes</span>
+                </div>
+
+                <div class="mode-card" onclick="showChapterSelection()">
+                    <div class="mode-icon">📚</div>
+                    <h3>Chapter Test</h3>
+                    <p>Test specific topic</p>
+                    <span class="mode-time">Varies</span>
+                </div>
+
+                <div class="mode-card" onclick="startExam('full')">
+                    <div class="mode-icon">🎯</div>
+                    <h3>Full Exam</h3>
+                    <p>All 50 questions</p>
+                    <span class="mode-time">~25 minutes</span>
+                </div>
+
+                <div class="mode-card" onclick="showCustomSelection()">
+                    <div class="mode-icon">⚙️</div>
+                    <h3>Custom</h3>
+                    <p>Choose your settings</p>
+                    <span class="mode-time">Your choice</span>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Chapter Selection Screen -->
+    <div id="chapterSelection" class="chapter-selection hidden">
+        <div class="mode-container">
+            <h2>Select Chapter</h2>
+            <div class="chapter-list">
+                <button class="chapter-btn" onclick="startExam('chapter', 'HTML & CSS')">HTML & CSS (17
+                    questions)</button>
+                <button class="chapter-btn" onclick="startExam('chapter', 'JavaScript')">JavaScript (25
+                    questions)</button>
+                <button class="chapter-btn" onclick="startExam('chapter', 'TypeScript')">TypeScript (10
+                    questions)</button>
+                <button class="chapter-btn disabled" disabled>React (Coming Soon)</button>
+                <button class="chapter-btn disabled" disabled>Next.js (Coming Soon)</button>
+                <button class="chapter-btn disabled" disabled>Redux (Coming Soon)</button>
+            </div>
+            <button class="back-btn" onclick="showModeSelection()">← Back</button>
+        </div>
+    </div>
+
+    <!-- Custom Selection Screen -->
+    <div id="customSelection" class="custom-selection hidden">
+        <div class="mode-container">
+            <h2>Custom Exam Settings</h2>
+            <div class="custom-form">
+                <div class="form-group">
+                    <label>Number of Questions:</label>
+                    <input type="number" id="customCount" min="5" max="50" value="20">
+                </div>
+                <div class="form-group">
+                    <label>Timer (minutes, 0 for no timer):</label>
+                    <input type="number" id="customTimer" min="0" max="120" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Difficulty:</label>
+                    <select id="customDifficulty">
+                        <option value="all">All Levels</option>
+                        <option value="basic">Basic Only</option>
+                        <option value="intermediate">Intermediate Only</option>
+                        <option value="advanced">Advanced Only</option>
+                    </select>
+                </div>
+            </div>
+            <button class="start-btn" onclick="startCustomExam()">Start Custom Exam</button>
+            <button class="back-btn" onclick="showModeSelection()">← Back</button>
+        </div>
+    </div>
+
+    <!-- Exam Screen -->
+    <div id="examScreen" class="exam-screen hidden">
+        <!-- Header -->
+        <div class="exam-header">
+            <div class="exam-info">
+                <span id="questionCounter">Question 1 of 10</span>
+                <span id="chapterBadge" class="chapter-badge"></span>
+            </div>
+            <div class="exam-controls">
+                <span id="timer" class="timer hidden">⏱️ 10:00</span>
+                <button class="flag-btn" onclick="toggleFlag()" id="flagBtn">🚩 Flag</button>
+                <button class="quit-btn" onclick="quitExam()">Quit</button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-container">
+            <div class="difficulty-badge" id="difficultyBadge">Intermediate</div>
+            <h2 class="question-text" id="questionText"></h2>
+
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="exam-navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+            <div class="question-dots" id="questionDots"></div>
+            <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+        </div>
+
+        <button class="submit-btn hidden" id="submitBtn" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="results-screen hidden">
+        <div class="results-container">
+            <h1 class="results-title">🎉 Exam Complete!</h1>
+
+            <div class="score-card">
+                <div class="score-circle">
+                    <div class="score-number" id="scorePercentage">0%</div>
+                    <div class="score-label">Score</div>
+                </div>
+                <div class="score-details">
+                    <div class="score-item">
+                        <span class="score-value" id="correctCount">0</span>
+                        <span class="score-label">Correct</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="incorrectCount">0</span>
+                        <span class="score-label">Incorrect</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="timeTaken">0:00</span>
+                        <span class="score-label">Time</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="action-btn primary" onclick="reviewAnswers()">📋 Review Answers</button>
+                <button class="action-btn" onclick="retakeExam()">🔄 Retake Exam</button>
+                <a href="index.html" class="action-btn">🏠 Back to Home</a>
+            </div>
+
+            <div class="results-breakdown" id="resultsBreakdown">
+                <!-- Detailed results will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/questions.js"></script>
+    <script src="scripts/exam.js"></script>
+</body>
+
+</html>

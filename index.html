@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Frontend Interview Preparation 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .hero .description {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 3rem;
+        }
+
+        .chapter-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .chapter-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .chapter-card:hover {
+            transform: translateX(8px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .chapter-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .chapter-count {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chapters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Senior Frontend Interview Preparation</h1>
+            <p class="subtitle">2025 Ready • Comprehensive • Production-Tested</p>
+            <p class="description">
+                Master the essential concepts, patterns, and best practices for senior frontend engineering roles.
+                This comprehensive guide covers everything from fundamentals to advanced topics with real-world code
+                examples.
+            </p>
+            <a href="#chapters" class="cta-button">Start Learning →</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">143+</div>
+                <div class="stat-label">Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Chapters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Code Examples</div>
+            </div>
+        </div>
+
+        <h2 id="chapters" style="font-size: 2rem; margin-bottom: 2rem; text-align: center; color: #e2e8f0;">Choose Your
+            Chapter</h2>
+
+        <div class="chapters-grid">
+            <a href="chapters/html-css.html" class="chapter-card">
+                <div class="chapter-title">HTML & CSS</div>
+                <div class="chapter-count">17 Questions • Basic to Advanced</div>
+            </a>
+
+            <a href="chapters/javascript.html" class="chapter-card">
+                <div class="chapter-title">JavaScript</div>
+                <div class="chapter-count">25 Questions • Core Concepts</div>
+            </a>
+
+            <a href="chapters/typescript.html" class="chapter-card">
+                <div class="chapter-title">TypeScript</div>
+                <div class="chapter-count">10 Questions • Type System Mastery</div>
+            </a>
+
+            <a href="chapters/react.html" class="chapter-card">
+                <div class="chapter-title">React</div>
+                <div class="chapter-count">28 Questions • Hooks & Patterns</div>
+            </a>
+
+            <a href="chapters/nextjs.html" class="chapter-card">
+                <div class="chapter-title">Next.js</div>
+                <div class="chapter-count">10 Questions • App Router & SSR</div>
+            </a>
+
+            <a href="chapters/redux.html" class="chapter-card">
+                <div class="chapter-title">Redux</div>
+                <div class="chapter-count">15 Questions • State Management</div>
+            </a>
+
+            <a href="chapters/browser-storage.html" class="chapter-card">
+                <div class="chapter-title">Browser Storage & Security</div>
+                <div class="chapter-count">8 Questions • Security Best Practices</div>
+            </a>
+
+            <a href="chapters/performance.html" class="chapter-card">
+                <div class="chapter-title">Performance & Optimization</div>
+                <div class="chapter-count">8 Questions • Speed & Efficiency</div>
+            </a>
+
+            <a href="chapters/system-design.html" class="chapter-card">
+                <div class="chapter-title">System Design</div>
+                <div class="chapter-count">12 Questions • Architecture & Patterns</div>
+            </a>
+
+            <a href="chapters/leadership.html" class="chapter-card">
+                <div class="chapter-title">Leadership & Behavioral</div>
+                <div class="chapter-count">10 Questions • Senior/Lead Level</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Built with ❤️ for Frontend Engineers • Updated for 2025</p>
+        </div>
+    </div>
+</body>
+
+</html>

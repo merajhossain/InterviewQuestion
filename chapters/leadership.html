@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership & Behavioral - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">Leadership & Behavioral</h1>
+        <div class="chapter-nav-controls">
+            <a href="system-design.html" class="nav-button">← Previous</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="chapter">
+            <h2 class="chapter-title">Leadership & Behavioral</h2>
+
+            <!-- Question 1 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. How do you handle conflict in a team?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Listen to all sides, focus on the problem (not people), and find a solution that aligns with team
+                    goals.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Steps for conflict resolution:</p>
+                    <ol>
+                        <li><strong>Listen actively:</strong> Understand each perspective without judgment</li>
+                        <li><strong>Identify the root cause:</strong> Is it technical disagreement, miscommunication, or
+                            resource conflict?</li>
+                        <li><strong>Focus on data:</strong> Use metrics, user feedback, or technical constraints to
+                            guide decisions</li>
+                        <li><strong>Find common ground:</strong> What does everyone agree on?</li>
+                        <li><strong>Propose solutions:</strong> Offer multiple options and discuss trade-offs</li>
+                        <li><strong>Follow up:</strong> Ensure the resolution is working</li>
+                    </ol>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Example: Resolving technical disagreement
+// Conflict: Team split on using Redux vs Context API
+
+// Approach:
+// 1. List requirements (state complexity, performance needs)
+// 2. Create proof of concept for both
+// 3. Measure bundle size, performance, developer experience
+// 4. Make data-driven decision
+// 5. Document the decision and rationale</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. Describe a time you mentored a junior developer.</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Share a specific example using the STAR method (Situation, Task, Action, Result).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Effective mentoring includes:</p>
+                    <ul>
+                        <li><strong>Pair programming:</strong> Work together on complex features</li>
+                        <li><strong>Code reviews:</strong> Provide constructive feedback with explanations</li>
+                        <li><strong>Resource sharing:</strong> Recommend articles, courses, and documentation</li>
+                        <li><strong>Goal setting:</strong> Help them define learning objectives</li>
+                        <li><strong>Safe environment:</strong> Encourage questions and experimentation</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Code Review Example - Teaching Moment
+// Instead of: "This is wrong"
+// Say: "Great start! Here's how we can improve this..."
+
+// Before (Junior's code)
+const users = data.map(u => u.name);
+
+// Feedback with explanation:
+// "Consider using destructuring for cleaner code:
+const users = data.map(({ name }) => name);
+
+// Also, what happens if 'name' is undefined?
+// Let's add a fallback:
+const users = data.map(({ name = 'Unknown' }) => name);"</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. How do you prioritize technical debt vs new features?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Balance business needs with code health. Use the "20% rule" - dedicate ~20% of sprint capacity to
+                    tech debt.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Framework for prioritization:</p>
+                    <ul>
+                        <li><strong>Impact vs Effort Matrix:</strong> Prioritize high-impact, low-effort items</li>
+                        <li><strong>Risk Assessment:</strong> Critical bugs and security issues come first</li>
+                        <li><strong>Developer Velocity:</strong> If tech debt slows down feature development, address it
+                        </li>
+                        <li><strong>Communicate trade-offs:</strong> Help stakeholders understand the cost of ignoring
+                            tech debt</li>
+                        <li><strong>Incremental approach:</strong> Don't wait for a "big rewrite"</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Tech Debt Tracking Example
+const techDebtItems = [
+  {
+    title: "Migrate from Class components to Hooks",
+    impact: "High", // Improves maintainability
+    effort: "Medium",
+    priority: "High"
+  },
+  {
+    title: "Update deprecated dependencies",
+    impact: "Critical", // Security risk
+    effort: "Low",
+    priority: "Immediate"
+  },
+  {
+    title: "Refactor legacy API layer",
+    impact: "Medium",
+    effort: "High",
+    priority: "Low" // Do incrementally
+  }
+];</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Tell me about a production incident you handled.</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Describe the incident, your response, resolution, and lessons learned. Focus on process and
+                    communication.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Incident response framework:</p>
+                    <ol>
+                        <li><strong>Detect:</strong> Monitoring alerts, user reports</li>
+                        <li><strong>Assess:</strong> Severity, impact, affected users</li>
+                        <li><strong>Communicate:</strong> Notify stakeholders, create status page</li>
+                        <li><strong>Mitigate:</strong> Quick fix or rollback</li>
+                        <li><strong>Resolve:</strong> Root cause analysis and permanent fix</li>
+                        <li><strong>Post-mortem:</strong> Document and prevent recurrence</li>
+                    </ol>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Example Post-Mortem Template
+{
+  "incident": "Payment page crash on Safari",
+  "timeline": {
+    "detected": "2024-01-15 14:30 UTC",
+    "resolved": "2024-01-15 15:45 UTC"
+  },
+  "root_cause": "Polyfill missing for Safari 14",
+  "impact": "~500 users affected, $2K revenue loss",
+  "resolution": "Added core-js polyfill for Promise.allSettled",
+  "prevention": [
+    "Add Safari 14 to CI/CD test matrix",
+    "Implement better error tracking",
+    "Create browser compatibility checklist"
+  ],
+  "action_items": [
+    { owner: "DevOps", task: "Update test browsers" },
+    { owner: "Frontend", task: "Audit polyfills" }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. How do you foster a culture of code quality?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Lead by example, establish standards, automate checks, and make code reviews a learning opportunity.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Building quality culture:</p>
+                    <ul>
+                        <li><strong>Automated standards:</strong> ESLint, Prettier, TypeScript strict mode</li>
+                        <li><strong>Code review guidelines:</strong> Clear, constructive, timely</li>
+                        <li><strong>Testing requirements:</strong> Minimum coverage thresholds</li>
+                        <li><strong>Documentation:</strong> README, ADRs (Architecture Decision Records)</li>
+                        <li><strong>Knowledge sharing:</strong> Tech talks, pair programming sessions</li>
+                        <li><strong>Celebrate quality:</strong> Recognize well-written code</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// .eslintrc.js - Enforce standards
+module.exports = {
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
+  rules: {
+    'no-console': 'error', // Prevent console.log in production
+    'complexity': ['error', 10], // Limit function complexity
+    '@typescript-eslint/explicit-function-return-type': 'warn'
+  }
+};
+
+// package.json - Pre-commit hooks
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": ["eslint --fix", "prettier --write"]
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. How do you handle estimation and deadlines?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Break down tasks, add buffer for unknowns, communicate risks early, and push back on unrealistic
+                    deadlines.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Estimation best practices:</p>
+                    <ul>
+                        <li><strong>Story points:</strong> Use relative sizing (Fibonacci: 1, 2, 3, 5, 8, 13)</li>
+                        <li><strong>Three-point estimation:</strong> Best case, likely case, worst case</li>
+                        <li><strong>Include everything:</strong> Testing, code review, deployment, documentation</li>
+                        <li><strong>Track velocity:</strong> Use historical data to improve estimates</li>
+                        <li><strong>Communicate uncertainty:</strong> "This is a rough estimate with ±30% variance"</li>
+                        <li><strong>Negotiate scope:</strong> If deadline is fixed, what can we cut?</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Estimation Example
+const feature = {
+  name: "User Dashboard Redesign",
+  breakdown: [
+    { task: "Design review & feedback", points: 2 },
+    { task: "Component architecture", points: 3 },
+    { task: "Implement UI components", points: 8 },
+    { task: "API integration", points: 5 },
+    { task: "Unit tests", points: 3 },
+    { task: "E2E tests", points: 5 },
+    { task: "Code review iterations", points: 2 },
+    { task: "Documentation", points: 1 }
+  ],
+  total: 29, // points
+  buffer: 6, // 20% buffer for unknowns
+  estimated_total: 35, // points
+  velocity: 20, // points per sprint
+  estimated_sprints: 2 // Math.ceil(35/20)
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. Describe a time you disagreed with a decision.</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Show you can disagree constructively, present alternatives with data, and commit once a decision is
+                    made.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Principles of constructive dissent:</p>
+                    <ul>
+                        <li><strong>Disagree and commit:</strong> Voice concerns, but support the final decision</li>
+                        <li><strong>Data over opinions:</strong> Back your position with evidence</li>
+                        <li><strong>Propose alternatives:</strong> Don't just say "no", offer solutions</li>
+                        <li><strong>Consider context:</strong> Understand constraints you might not be aware of</li>
+                        <li><strong>Escalate appropriately:</strong> Know when to involve higher-level decision makers
+                        </li>
+                        <li><strong>Learn from outcomes:</strong> Were your concerns valid? What can you learn?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. How do you evaluate candidates during interviews?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Look for problem-solving ability, communication skills, cultural fit, and growth potential - not
+                    just technical knowledge.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Evaluation framework:</p>
+                    <ul>
+                        <li><strong>Technical competency:</strong> Can they solve problems? Do they write clean code?
+                        </li>
+                        <li><strong>Communication:</strong> Can they explain their thinking clearly?</li>
+                        <li><strong>Collaboration:</strong> How do they handle feedback? Do they ask good questions?
+                        </li>
+                        <li><strong>Learning ability:</strong> How do they approach unfamiliar problems?</li>
+                        <li><strong>Cultural fit:</strong> Do they align with team values?</li>
+                        <li><strong>Avoid bias:</strong> Use structured interviews, diverse interview panels</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Interview Scorecard Template
+const candidateEvaluation = {
+  name: "Candidate Name",
+  role: "Senior Frontend Engineer",
+  scores: {
+    technical_skills: {
+      score: 4, // out of 5
+      notes: "Strong React knowledge, good system design thinking"
+    },
+    problem_solving: {
+      score: 5,
+      notes: "Excellent approach, considered edge cases, optimized solution"
+    },
+    communication: {
+      score: 4,
+      notes: "Clear explanations, asked clarifying questions"
+    },
+    collaboration: {
+      score: 4,
+      notes: "Receptive to hints, explained trade-offs well"
+    },
+    cultural_fit: {
+      score: 5,
+      notes: "Values align, growth mindset, team-oriented"
+    }
+  },
+  overall: "Strong Hire",
+  concerns: "Limited experience with TypeScript",
+  recommendation: "Hire - can learn TypeScript on the job"
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. How do you stay current with technology?</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Continuous learning through reading, experimentation, community involvement, and selective adoption
+                    of new technologies.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Learning strategies:</p>
+                    <ul>
+                        <li><strong>Curated sources:</strong> Follow key blogs, newsletters (JavaScript Weekly, React
+                            Status)</li>
+                        <li><strong>Hands-on practice:</strong> Side projects, open source contributions</li>
+                        <li><strong>Community:</strong> Conferences, meetups, Twitter/X tech community</li>
+                        <li><strong>Peer learning:</strong> Tech talks, book clubs, pair programming</li>
+                        <li><strong>Selective adoption:</strong> Don't chase every trend, evaluate ROI</li>
+                        <li><strong>Teach others:</strong> Writing, mentoring solidifies knowledge</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Personal Learning Plan Example
+const learningPlan = {
+  q1_2025: {
+    focus: "React Server Components & Next.js 15",
+    resources: [
+      "Next.js docs",
+      "Build a demo project",
+      "Write blog post about learnings"
+    ],
+    time_commitment: "5 hours/week"
+  },
+  continuous: {
+    daily: "Read 1-2 tech articles",
+    weekly: "Experiment with new tools",
+    monthly: "Attend 1 meetup or watch 1 conference talk",
+    quarterly: "Evaluate and adopt 1 new tool/practice"
+  },
+  evaluation: "What problems does this solve? Is it production-ready?"
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. Tell me about a time you failed and what you learned.</h3>
+                    <span class="badge senior">Senior/Lead</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Show vulnerability, accountability, and growth. Focus on the learning and how you've applied it
+                    since.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Framework for discussing failure:</p>
+                    <ul>
+                        <li><strong>Own it:</strong> Take responsibility, don't blame others</li>
+                        <li><strong>Context:</strong> What led to the failure?</li>
+                        <li><strong>Impact:</strong> What were the consequences?</li>
+                        <li><strong>Response:</strong> How did you handle it?</li>
+                        <li><strong>Learning:</strong> What did you take away?</li>
+                        <li><strong>Application:</strong> How have you applied this learning since?</li>
+                        <li><strong>Growth mindset:</strong> Failures are learning opportunities</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Example Failure Story Structure
+const failureStory = {
+  situation: "Led migration to new state management library",
+  mistake: "Underestimated complexity, didn't create migration plan",
+  impact: "Missed deadline by 3 weeks, team morale affected",
+  response: [
+    "Acknowledged the mistake to team and stakeholders",
+    "Created detailed migration plan mid-project",
+    "Worked extra hours to minimize delay",
+    "Held retrospective to identify improvements"
+  ],
+  learnings: [
+    "Always create detailed migration plan before starting",
+    "Involve team in estimation for complex projects",
+    "Set up checkpoints to catch issues early",
+    "Communication is critical when things go wrong"
+  ],
+  applied_since: [
+    "Now use RFC (Request for Comments) process for major changes",
+    "Created migration playbook for future use",
+    "Improved estimation skills through post-mortems"
+  ]
+};</code></pre>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

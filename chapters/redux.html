@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redux - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">Redux</h1>
+        <div class="chapter-nav-controls">
+            <a href="nextjs.html" class="nav-button">← Previous</a>
+            <a href="browser-storage.html" class="nav-button">Next: Browser Storage & Security →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Redux Section -->
+        <section id="redux" class="chapter">
+            <h2 class="chapter-title">Redux & State Management</h2>
+            <!-- 1. Flux Architecture -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is Flux Architecture?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An application architecture for building client-side web apps. It enforces a <strong>unidirectional
+                        data flow</strong>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Action -> Dispatcher -> Store -> View. Redux is a library inspired by Flux but simplifies it
+                        (single store, no dispatcher).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Flux Flow
+Action -> Dispatcher -> Store -> View -> Action
+
+// Redux Flow
+Action -> Reducer -> Store -> View -> Action</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Redux Principles -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What are the Three Principles of Redux?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Single Source of Truth, State is Read-Only, Changes are made with Pure Functions (Reducers).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ol>
+                        <li><strong>Single Source of Truth:</strong> The state of your whole application is stored in an
+                            object tree within a single store.</li>
+                        <li><strong>State is Read-Only:</strong> The only way to change the state is to emit an action.
+                        </li>
+                        <li><strong>Changes are made with Pure Functions:</strong> To specify how the state tree is
+                            transformed by actions, you write pure reducers.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 3. Actions & Reducers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Explain Actions and Reducers.</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Action:</strong> A plain object describing <em>what happened</em>. <strong>Reducer:</strong>
+                    A pure function describing <em>how the state changes</em> in response to an action.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Reducer signature: <code>(previousState, action) => newState</code>. It must never mutate the
+                        state directly.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Action
+const increment = { type: 'INCREMENT' };
+
+// Reducer
+function counter(state = 0, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    default:
+      return state;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Store -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is the Store?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The object that holds the application state.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It provides methods to access state (<code>getState()</code>), update state
+                        (<code>dispatch(action)</code>), and register listeners (<code>subscribe(listener)</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { createStore } from 'redux';
+const store = createStore(counter);
+
+store.subscribe(() => console.log(store.getState()));
+
+store.dispatch({ type: 'INCREMENT' }); // 1</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Middleware (Thunk vs Saga) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. Redux Thunk vs Redux Saga?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Middleware for handling side effects (async logic). <strong>Thunk</strong> allows dispatching
+                    functions. <strong>Saga</strong> uses Generators to handle complex async flows.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Thunk:</strong> Simple, easy to learn. Good for simple async calls.</li>
+                        <li><strong>Saga:</strong> More powerful, testable, and better for complex flows (cancellation,
+                            debouncing, race conditions). Uses ES6 Generators.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Thunk
+const fetchUser = () => async (dispatch) => {
+  const user = await api.getUser();
+  dispatch({ type: 'USER_LOADED', payload: user });
+};
+
+// Saga
+function* fetchUser() {
+  const user = yield call(api.getUser);
+  yield put({ type: 'USER_LOADED', payload: user });
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. connect vs Hooks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. `connect` HOC vs `useSelector`/`useDispatch` Hooks?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <code>connect</code> is the legacy way (HOC) to connect components to Redux. Hooks are the modern,
+                    recommended way.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Hooks are cleaner and reduce boilerplate. <code>useSelector</code> extracts data from the store
+                        state. <code>useDispatch</code> returns the dispatch function.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Hooks (Modern)
+const count = useSelector(state => state.counter);
+const dispatch = useDispatch();
+
+// connect (Legacy)
+export default connect(mapStateToProps, mapDispatchToProps)(Component);</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Redux Toolkit (RTK) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What is Redux Toolkit (RTK)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The official, opinionated toolset for efficient Redux development. It simplifies store setup and
+                    reduces boilerplate.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It includes <code>configureStore</code>, <code>createSlice</code> (auto-generates
+                        actions/reducers), and uses Immer library internally to allow "mutating" logic in reducers
+                        (which Immer converts to immutable updates).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: state => state + 1, // "Mutation" allowed thanks to Immer
+  },
+});
+
+const store = configureStore({ reducer: counterSlice.reducer });</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Immutability -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. Why is Immutability important in Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Redux relies on shallow equality checking to determine if the state has changed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>If you mutate the state directly, Redux won't detect the change, and components won't re-render.
+                        It also enables features like Time Travel Debugging.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Bad (Mutation)
+state.value = 1;
+return state;
+
+// Good (Immutable Update)
+return { ...state, value: 1 };</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Reselect -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is Reselect?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A library for creating memoized "selector" functions.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Selectors compute derived data from the Redux store. Reselect memoizes them so they are only
+                        recomputed when their input arguments change, improving performance.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const selectTax = createSelector(
+  state => state.subtotal,
+  state => state.taxPercent,
+  (subtotal, taxPercent) => subtotal * (taxPercent / 100)
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Redux DevTools -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What are Redux DevTools?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A browser extension that allows you to inspect every action dispatched, view the state changes, and
+                    "time travel" (undo/redo actions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It is essential for debugging Redux applications.</p>
+                </div>
+            </div>
+
+            <!-- 11. Context vs Redux (Deep Dive) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Can Context API replace Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    For simple apps, yes. For complex apps with frequent updates, no.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Context + useReducer can mimic Redux, but it lacks the performance optimizations (selectors),
+                        middleware ecosystem, and DevTools of Redux. Context triggers a re-render of all consumers on
+                        every update.</p>
+                </div>
+            </div>
+
+            <!-- 12. Normalizing State -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What is State Normalization?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Structuring the state like a database (flat structure) rather than nested objects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Instead of an array of objects, use an object keyed by IDs and an array of IDs. This makes
+                        updates and lookups faster (O(1) vs O(n)) and avoids deep nesting issues.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Normalized State
+{
+  users: {
+    byId: {
+      "1": { id: "1", name: "Alice" },
+      "2": { id: "2", name: "Bob" }
+    },
+    allIds: ["1", "2"]
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 13. Async Actions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. How do you handle Async Actions in Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Redux itself is synchronous. You need middleware like Thunk or Saga.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Standard pattern: Dispatch <code>FETCH_START</code> -> Make API call -> Dispatch
+                        <code>FETCH_SUCCESS</code> or <code>FETCH_FAILURE</code>.</p>
+                </div>
+            </div>
+
+            <!-- 14. RTK Query -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. What is RTK Query?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A powerful data fetching and caching tool built into Redux Toolkit.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It eliminates the need to write thunks and reducers for data fetching. It handles caching,
+                        polling, invalidation, and optimistic updates automatically.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Define API
+export const pokemonApi = createApi({
+  reducerPath: 'pokemonApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' }),
+  endpoints: (builder) => ({
+    getPokemonByName: builder.query({
+      query: (name) => `pokemon/${name}`,
+    }),
+  }),
+});
+
+// Use Hook
+const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur');</code></pre>
+                </div>
+            </div>
+
+            <!-- 15. Alternatives -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Mention some Redux alternatives.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Zustand, Recoil, MobX, Jotai.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Zustand:</strong> Minimalist, hook-based, no boilerplate.</li>
+                        <li><strong>Recoil/Jotai:</strong> Atomic state management (good for derived state).</li>
+                        <li><strong>MobX:</strong> Observable-based, mutable style.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Zustand Example
+import { create } from 'zustand';
+
+const useStore = create((set) => ({
+  bears: 0,
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+}));</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">Next.js</h1>
+        <div class="chapter-nav-controls">
+            <a href="react.html" class="nav-button">← Previous</a>
+            <a href="redux.html" class="nav-button">Next: Redux →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="nextjs" class="chapter">
+            <h2 class="chapter-title">Next.js</h2>
+
+            <!-- 1. App Router vs Pages Router -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. App Router vs Pages Router?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Pages Router:</strong> File-system based routing in `pages/`. <strong>App Router:</strong>
+                    New paradigm in `app/` using Server Components by default.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>App Router supports Layouts, Server Components, Streaming, and better data fetching patterns. It
+                        is the future of Next.js.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Pages Router Structure
+pages/
+  index.tsx
+  about.tsx
+
+// App Router Structure
+app/
+  page.tsx
+  about/
+    page.tsx
+  layout.tsx // Shared UI</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Server vs Client Components -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. When to use Client Components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Use them when you need interactivity (onClick, onChange), hooks (useState, useEffect), or browser
+                    APIs.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>By default, everything in App Router is a Server Component. Add <code>'use client'</code> at the
+                        top of the file to make it a Client Component. Server Components cannot use hooks or event
+                        listeners.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>'use client'; // Marks this as a Client Component
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return &lt;button onClick={() => setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Data Fetching in App Router -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. How do you fetch data in App Router?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using standard <code>async/await</code> in Server Components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You can fetch data directly in the component body. Next.js extends the native <code>fetch</code>
+                        API to allow caching and revalidation configuration (e.g.,
+                        <code>next: { revalidate: 3600 }</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>async function getData() {
+  const res = await fetch('https://api.example.com/data');
+  if (!res.ok) throw new Error('Failed to fetch data');
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
+  return &lt;main&gt;{/* ... */}&lt;/main&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. Static vs Dynamic Rendering -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Static vs Dynamic Rendering in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Static:</strong> Prerendered at build time (default). <strong>Dynamic:</strong> Rendered at
+                    request time.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Next.js automatically switches to dynamic rendering if you use dynamic functions (cookies,
+                        headers) or uncached data fetches.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Force Dynamic Rendering
+export const dynamic = 'force-dynamic';
+
+// Or use dynamic functions
+import { cookies } from 'next/headers';
+const cookieStore = cookies();</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Image Optimization -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. How does the Next.js Image component optimize images?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It automatically resizes, compresses, and serves images in modern formats (WebP/AVIF) based on the
+                    user's device.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It also prevents Layout Shift (CLS) by requiring width/height or fill mode, and lazy loads images
+                        by default.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import Image from 'next/image';
+
+&lt;Image
+  src="/profile.png"
+  width={500}
+  height={500}
+  alt="Profile Picture"
+/&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Middleware -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is Middleware in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Code that runs before a request is completed. Useful for authentication, redirects, and rewriting
+                    paths.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It runs on the Edge runtime (limited Node.js APIs). You can modify the request or response
+                        headers and redirect users based on conditions (e.g., checking a cookie).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// middleware.ts
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.rewrite(new URL('/auth/login', request.url));
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. ISR (Incremental Static Regeneration) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What is ISR?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Allows you to update static pages after you've built your site.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You can retain the benefits of static generation while scaling to millions of pages. Pages are
+                        regenerated in the background as traffic comes in, based on a revalidation interval.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Revalidate every hour
+export const revalidate = 3600;
+
+export default async function Page() {
+  const data = await fetch('...', { next: { revalidate: 3600 } });
+  return ...
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Route Handlers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What are Route Handlers?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The equivalent of API routes in the App Router (<code>route.ts</code> files).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They allow you to create custom request handlers for a given route using the Web Request and
+                        Response APIs. Support GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/api/hello/route.ts
+export async function GET(request: Request) {
+  return Response.json({ message: 'Hello World' });
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Metadata API -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. How do you handle SEO in App Router?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using the Metadata API (exporting a <code>metadata</code> object or <code>generateMetadata</code>
+                    function).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It replaces the old <code>Head</code> component. You can define title, description, open graph
+                        tags, etc., either statically or dynamically based on route params.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Static Metadata
+export const metadata = {
+  title: 'My Page',
+  description: 'This is my page',
+};
+
+// Dynamic Metadata
+export async function generateMetadata({ params }) {
+  return {
+    title: `Product ${params.id}`,
+  };
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Server Actions (Next.js context) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. How do Server Actions work in Next.js?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    They allow you to call server-side functions directly from client components (e.g., form actions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Next.js handles the API endpoint creation automatically. It's great for mutations. You can use
+                        <code>revalidatePath</code> to update the UI after the action completes.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/actions.ts
+'use server';
+
+export async function createTodo(formData: FormData) {
+  await db.todo.create({ title: formData.get('title') });
+  revalidatePath('/todos');
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">HTML & CSS</h1>
+        <div class="chapter-nav-controls">
+            <a href="javascript.html" class="nav-button">Next: JavaScript →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="chapter">
+            <h2 class="chapter-title">HTML & CSS</h2>
+
+            <!-- Question 1 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is Semantic HTML?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using HTML tags that describe their meaning (e.g., <code>&lt;header&gt;</code>,
+                    <code>&lt;article&gt;</code>) instead of generic <code>&lt;div&gt;</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Semantic HTML improves accessibility (screen readers), SEO, and code readability. Examples:
+                        <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>,
+                        <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;!-- Bad --&gt;
+&lt;div class="header"&gt;&lt;/div&gt;
+
+&lt;!-- Good --&gt;
+&lt;header&gt;&lt;/header&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. Explain the Box Model.</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Every element is a box with: Content → Padding → Border → Margin (from inside out).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>By default, <code>width</code> and <code>height</code> only apply to the content. Use
+                        <code>box-sizing: border-box</code> to include padding and border in the width/height
+                        calculation.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>/* Standard Box Model */
+.box {
+  width: 100px;
+  padding: 10px;
+  border: 5px;
+  /* Actual width = 100 + 20 + 10 = 130px */
+}
+
+/* Border Box Model (Recommended) */
+.box {
+  box-sizing: border-box;
+  width: 100px;
+  padding: 10px;
+  border: 5px;
+  /* Actual width = 100px (padding and border included) */
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. What is Flexbox and when to use it?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A layout model for arranging items in a row or column with flexible sizing.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use Flexbox for one-dimensional layouts (either row or column). Key properties:
+                        <code>justify-content</code> (main axis), <code>align-items</code> (cross axis),
+                        <code>flex-grow</code>, <code>flex-shrink</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item {
+  flex: 1; /* Grow to fill available space */
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is CSS Grid and when to use it?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A layout system for creating two-dimensional grids (rows AND columns).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use Grid for complex layouts. Flexbox is for one-dimensional layouts, Grid is for
+                        two-dimensional. Key properties: <code>grid-template-columns</code>,
+                        <code>grid-template-rows</code>, <code>gap</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Responsive Grid */
+.container {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. Difference between `position: relative`, `absolute`, `fixed`, and
+                        `sticky`?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Relative:</strong> Positioned relative to itself. <strong>Absolute:</strong> Positioned
+                    relative to nearest positioned ancestor. <strong>Fixed:</strong> Positioned relative to viewport.
+                    <strong>Sticky:</strong> Toggles between relative and fixed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><code>relative</code>: Offset from its normal position, but space is reserved.</li>
+                        <li><code>absolute</code>: Removed from flow, positioned relative to nearest positioned
+                            ancestor.</li>
+                        <li><code>fixed</code>: Removed from flow, stays in same place when scrolling.</li>
+                        <li><code>sticky</code>: Acts like relative until scroll threshold, then becomes fixed.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>.sticky-header {
+  position: sticky;
+  top: 0; /* Sticks to top when scrolling */
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is Specificity in CSS?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The algorithm that determines which CSS rule wins when multiple rules target the same element.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Specificity hierarchy (highest to lowest):</p>
+                    <ol>
+                        <li>Inline styles (<code>style="..."</code>)</li>
+                        <li>IDs (<code>#id</code>)</li>
+                        <li>Classes, attributes, pseudo-classes (<code>.class</code>, <code>[type]</code>,
+                            <code>:hover</code>)</li>
+                        <li>Elements and pseudo-elements (<code>div</code>, <code>::before</code>)</li>
+                    </ol>
+                    <p><code>!important</code> overrides everything (use sparingly).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>/* Specificity: 0-0-1 */
+div { color: red; }
+
+/* Specificity: 0-1-0 (WINS) */
+.text { color: blue; }
+
+/* Specificity: 1-0-0 (WINS) */
+#heading { color: green; }</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What are Pseudo-classes and Pseudo-elements?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Pseudo-classes</strong> (single colon) select elements in a specific state.
+                    <strong>Pseudo-elements</strong> (double colon) style specific parts of an element.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Pseudo-classes: <code>:hover</code>, <code>:focus</code>, <code>:nth-child()</code>,
+                        <code>:first-child</code></p>
+                    <p>Pseudo-elements: <code>::before</code>, <code>::after</code>, <code>::first-letter</code>,
+                        <code>::selection</code></p>
+                </div>
+                <div class="code-example">
+                    <pre><code>/* Pseudo-class */
+button:hover {
+  background: blue;
+}
+
+/* Pseudo-element */
+p::first-letter {
+  font-size: 2em;
+  color: red;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. Explain CSS Animations vs Transitions.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Transitions:</strong> Smooth change from one state to another (e.g., hover).
+                    <strong>Animations:</strong> Multi-step sequences with keyframes.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use transitions for simple state changes. Use animations for complex, multi-step effects.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>/* Transition */
+.button {
+  transition: background 0.3s ease;
+}
+.button:hover {
+  background: blue;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.element {
+  animation: slideIn 0.5s ease-out;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is the Critical Rendering Path?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It's the sequence of steps the browser takes to convert HTML, CSS, and JS into actual pixels on the
+                    screen.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Optimizing the CRP is key to improving web performance (Core Web Vitals). The steps are:</p>
+                    <ol>
+                        <li><strong>DOM Construction:</strong> Parse HTML into the DOM tree.</li>
+                        <li><strong>CSSOM Construction:</strong> Parse CSS into the CSSOM tree.</li>
+                        <li><strong>Render Tree:</strong> Combine DOM and CSSOM. (Elements with
+                            <code>display: none</code> are excluded).</li>
+                        <li><strong>Layout (Reflow):</strong> Calculate geometry (position and size) of each node.</li>
+                        <li><strong>Paint:</strong> Fill in pixels (colors, borders, shadows).</li>
+                        <li><strong>Composite:</strong> Layering the painted parts together.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. What is BEM and why use it?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    BEM stands for <strong>Block, Element, Modifier</strong>. It's a naming convention for CSS classes
+                    to make code reusable and maintainable.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Block:</strong> Standalone entity (e.g., <code>.card</code>).</li>
+                        <li><strong>Element:</strong> Part of a block (e.g., <code>.card__title</code>).</li>
+                        <li><strong>Modifier:</strong> A flag on a block or element (e.g.,
+                            <code>.card--featured</code>).</li>
+                    </ul>
+                    <p>It prevents style leaks and specificity wars by keeping specificity low (mostly single class
+                        selectors).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>/* Block */
+.btn {}
+
+/* Element */
+.btn__icon {}
+
+/* Modifier */
+.btn--primary {}
+.btn--large {}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. How does z-index and Stacking Context work?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <code>z-index</code> decides which element is "on top". But it only works if the element has a
+                    <code>position</code> (relative/absolute/fixed).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>The Trap:</strong> A child with <code>z-index: 999</code> can still be behind a neighbor
+                        with <code>z-index: 1</code> if the child's <em>parent</em> has a lower z-index than the
+                        neighbor. This is called a Stacking Context.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>.parent-1 { z-index: 1; position: relative; }
+.child-999 { z-index: 999; position: absolute; }
+
+.parent-2 { z-index: 2; position: relative; }
+
+/* .child-999 will be BEHIND .parent-2 
+   because .parent-1 (z-index: 1) is below .parent-2 (z-index: 2). 
+   The child cannot escape its parent's level. */</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What are CSS Custom Properties (Variables)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Variables you can use directly in CSS. They are great for theming (Dark Mode).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>You define them with <code>--name</code> and use them with <code>var(--name)</code>. Unlike SASS
+                        variables, they can be updated by JavaScript at runtime.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>:root {
+  --primary: blue;
+}
+
+button {
+  background: var(--primary);
+}
+
+/* Dark Mode */
+body.dark {
+  --primary: lightblue; /* Automatically updates all buttons */
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. What are ARIA roles and when should you use them?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Attributes that help screen readers understand custom controls. <strong>Rule #1:</strong> Don't use
+                    ARIA if a native HTML tag works.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use them only when you are building complex widgets (like a custom dropdown or modal) that don't
+                        have a built-in HTML tag.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;!-- BAD: Re-inventing the wheel --&gt;
+&lt;div role="button" onclick="..."&gt;Click&lt;/div&gt;
+
+&lt;!-- GOOD: Using native element --&gt;
+&lt;button onclick="..."&gt;Click&lt;/button&gt;
+
+&lt;!-- GOOD: ARIA for custom widget --&gt;
+&lt;div role="dialog" aria-labelledby="modal-title"&gt;
+  &lt;h2 id="modal-title"&gt;Settings&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. Pros and Cons of CSS-in-JS?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Writing CSS inside JavaScript files (e.g., Styled Components). It solves "global namespace" issues
+                    but adds file size.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Pros:</strong> No class name clashes, easy dynamic styling based on props.<br>
+                        <strong>Cons:</strong> Slower performance (runtime parsing), larger JS bundle.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Styled Components Example
+const Button = styled.button`
+  background: ${props => props.primary ? 'blue' : 'gray'};
+  color: white;
+  padding: 10px;
+`;
+
+// Usage
+&lt;Button primary&gt;Click Me&lt;/Button&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Difference between `display: none` and `visibility: hidden`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>display: none</strong> removes it completely (no space). <strong>visibility: hidden</strong>
+                    makes it invisible but it still takes up space.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Use <code>display: none</code> to completely hide something. Use <code>visibility: hidden</code>
+                        if you want to keep the layout structure stable but hide the content.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>.removed {
+  display: none; /* Element is GONE. Layout shifts. */
+}
+
+.invisible {
+  visibility: hidden; /* Element is there, just transparent. No layout shift. */
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. Why is Tailwind CSS so popular?</h3>
+                    <span class="badge intermediate">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    It lets you style elements by adding classes like <code>flex</code>, <code>p-4</code>,
+                    <code>text-red-500</code> directly in HTML.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It speeds up development because you don't have to switch between HTML and CSS files or invent
+                        class names like <code>.sidebar-wrapper-inner</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;!-- Traditional CSS --&gt;
+&lt;button class="btn-primary"&gt;Click&lt;/button&gt;
+
+&lt;!-- Tailwind CSS --&gt;
+&lt;button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"&gt;
+  Click
+&lt;/button&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. What are CSS Container Queries?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Like Media Queries, but they check the size of the <strong>parent container</strong>, not the whole
+                    screen.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>This makes components truly reusable. A "Card" component can look one way in a wide sidebar and
+                        another way in a narrow column, regardless of the screen size.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>.parent {
+  container-type: inline-size;
+}
+
+.child {
+  /* Default style */
+  font-size: 1rem;
+}
+
+@container (min-width: 500px) {
+  .child {
+    /* Style when PARENT is wider than 500px */
+    font-size: 2rem;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">React</h1>
+        <div class="chapter-nav-controls">
+            <a href="typescript.html" class="nav-button">← Previous</a>
+            <a href="nextjs.html" class="nav-button">Next: Next.js →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- React Section -->
+        <section id="react" class="chapter">
+            <h2 class="chapter-title">React</h2>
+
+            <!-- 1. Virtual DOM -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is the Virtual DOM?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A lightweight copy of the actual DOM in memory. React uses it to optimize updates.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>When state changes, React creates a new Virtual DOM tree. It compares this new tree with the
+                        previous one (Diffing Algorithm) and calculates the minimum number of changes required to update
+                        the real DOM (Reconciliation).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// React Element (Virtual DOM)
+const element = {
+  type: 'h1',
+  props: { children: 'Hello World' }
+};
+
+// React compares this object with the previous one
+// and updates the real DOM only if they differ.</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. JSX -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. What is JSX?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    JSX (JavaScript XML) is a syntax extension for JavaScript that allows you to write HTML-like code
+                    inside JavaScript.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Browsers cannot read JSX. It must be transpiled (usually by Babel) into standard JavaScript
+                        <code>React.createElement()</code> calls.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// JSX
+const element = &lt;h1&gt;Hello&lt;/h1&gt;;
+
+// Transpiled to JS
+const element = React.createElement('h1', null, 'Hello');</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Class vs Functional -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. Difference between Class and Functional Components?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Class:</strong> Uses ES6 classes, `this`, and lifecycle methods.
+                    <strong>Functional:</strong> Plain functions using Hooks for state/effects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Functional components are the modern standard. They are more concise, easier to test, and avoid
+                        common pitfalls with `this` binding.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Class Component
+class Welcome extends React.Component {
+  render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
+}
+
+// Functional Component
+function Welcome(props) {
+  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. State vs Props -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Difference between State and Props?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Props:</strong> Read-only data passed <em>into</em> a component (like function arguments).
+                    <strong>State:</strong> Mutable data managed <em>within</em> a component (like local variables).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Props allow parent-to-child communication. State allows a component to change its own data over
+                        time and trigger re-renders.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Parent passes props
+&lt;User name="Alice" /&gt;
+
+// Child uses props and manages own state
+function User(props) {
+  const [active, setActive] = useState(false); // State
+  return (
+    &lt;div&gt;
+      {props.name} is {active ? 'Active' : 'Inactive'}
+    &lt;/div&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Lifecycle Methods -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What are the React Lifecycle Phases?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Mounting</strong> (Birth), <strong>Updating</strong> (Growth), and
+                    <strong>Unmounting</strong> (Death).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>In functional components, we use the `useEffect` hook to handle these phases.</p>
+                    <ul>
+                        <li><strong>Mounting:</strong> <code>useEffect(..., [])</code></li>
+                        <li><strong>Updating:</strong> <code>useEffect(..., [dep])</code></li>
+                        <li><strong>Unmounting:</strong> <code>useEffect(() => cleanup, ...)</code></li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  console.log("Mounted");
+
+  return () => {
+    console.log("Unmounted");
+  };
+}, []); // Empty array = run once on mount</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. useState -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. Explain the useState Hook.</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A Hook that lets you add React state to functional components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It returns a pair: the current state value and a function that lets you update it. Updating state
+                        triggers a re-render.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const [count, setCount] = useState(0);
+
+// Update state (triggers re-render)
+setCount(count + 1);
+
+// Functional update (safer for multiple updates)
+setCount(prev => prev + 1);</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. useEffect -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. Explain the useEffect Hook.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Used for side effects: fetching data, directly updating the DOM, and timers.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It runs after every render by default. You can control when it runs using the dependency array.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>useEffect(() => {
+  // Runs on mount + when 'userId' changes
+  fetchData(userId);
+}, [userId]); 
+
+useEffect(() => {
+  // Runs only on mount
+}, []);</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. useContext -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is the Context API?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to share values (global state) between components without explicitly passing props through
+                    every level of the tree (Prop Drilling).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Commonly used for theme, current user, or language settings.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// 1. Create Context
+const ThemeContext = createContext('light');
+
+// 2. Provide Value
+&lt;ThemeContext.Provider value="dark"&gt;
+  &lt;Toolbar /&gt;
+&lt;/ThemeContext.Provider&gt;
+
+// 3. Consume Value
+const theme = useContext(ThemeContext); // "dark"</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. useRef -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is useRef used for?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Used to access DOM elements directly OR to store a mutable value that persists across renders
+                    <strong>without</strong> causing a re-render.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It returns a mutable ref object whose <code>.current</code> property is initialized to the passed
+                        argument.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const inputRef = useRef(null);
+
+const focusInput = () => {
+  // Access DOM node directly
+  inputRef.current.focus();
+};
+
+return &lt;input ref={inputRef} /&gt;;</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. useMemo vs useCallback -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. Difference between useMemo and useCallback?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>useMemo:</strong> Caches a calculated <em>value</em>. <strong>useCallback:</strong> Caches a
+                    <em>function definition</em>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Both are used for performance optimization to prevent unnecessary re-computations or re-renders
+                        of child components (when used with <code>React.memo</code>).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Returns a memoized value
+const expensiveValue = useMemo(() => compute(a, b), [a, b]);
+
+// Returns a memoized function
+const handleClick = useCallback(() => {
+  doSomething(a);
+}, [a]);</code></pre>
+                </div>
+            </div>
+
+            <!-- 11. Custom Hooks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. What are Custom Hooks?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    JavaScript functions that start with "use" and can call other hooks. They allow you to extract and
+                    reuse stateful logic between components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They follow the same rules as standard hooks. Common use cases include fetching data, handling
+                        local storage, or managing window events.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Custom Hook
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  return width;
+}
+
+// Usage
+const width = useWindowWidth();</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. Context vs Redux -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. When to use Context API vs Redux?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Context:</strong> Low-frequency updates (Theme, User, Locale). Built-in.
+                    <strong>Redux:</strong> High-frequency updates, complex state logic, or when you need
+                    middleware/devtools.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Context can cause performance issues if not used carefully (re-renders all consumers). Redux is
+                        optimized for performance and scalability.</p>
+                </div>
+            </div>
+
+            <!-- 13. Prop Drilling -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. What is Prop Drilling?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The process of passing data from a parent component down to a deep child component through
+                    intermediate components that do not need the data.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It makes code harder to maintain. Solved by using Context API, Redux, or Component Composition.
+                    </p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Prop Drilling
+&lt;App user={user} /&gt;
+  &lt;Layout user={user} /&gt; // Doesn't use user
+    &lt;Header user={user} /&gt; // Doesn't use user
+      &lt;Avatar user={user} /&gt; // Finally uses user</code></pre>
+                </div>
+            </div>
+
+            <!-- 14. Error Boundaries -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. What are Error Boundaries?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    React components that catch JavaScript errors anywhere in their child component tree, log those
+                    errors, and display a fallback UI.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They must be Class Components implementing <code>static getDerivedStateFromError()</code> or
+                        <code>componentDidCatch()</code>. They do not catch errors in event handlers or async code.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return &lt;h1&gt;Something went wrong.&lt;/h1&gt;;
+    return this.props.children;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 15. Fragments -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. What are Fragments?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to group a list of children without adding extra nodes (like extra `div`s) to the DOM.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Useful for returning multiple elements from a component or maintaining valid HTML structure
+                        (e.g., in tables or lists).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Short syntax
+&lt;&gt;
+  &lt;ChildA /&gt;
+  &lt;ChildB /&gt;
+&lt;/&gt;
+
+// Full syntax (supports keys)
+&lt;React.Fragment key={id}&gt;
+  ...
+&lt;/React.Fragment&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 16. Portals -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. What are Portals?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way to render children into a DOM node that exists outside the DOM hierarchy of the parent
+                    component.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Commonly used for modals, tooltips, and popups to avoid z-index or overflow issues.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>ReactDOM.createPortal(
+  &lt;div&gt;I am outside the root!&lt;/div&gt;,
+  document.getElementById('modal-root')
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- 17. Controlled vs Uncontrolled -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. Controlled vs Uncontrolled Components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Controlled:</strong> Form data is handled by React state. <strong>Uncontrolled:</strong>
+                    Form data is handled by the DOM itself (using refs).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Controlled components are recommended as they support instant validation and conditional
+                        disabling. Uncontrolled are closer to traditional HTML.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Controlled
+&lt;input value={name} onChange={e => setName(e.target.value)} /&gt;
+
+// Uncontrolled
+&lt;input ref={inputRef} /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 18. Higher-Order Components (HOC) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">18. What is a Higher-Order Component (HOC)?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A function that takes a component and returns a new component with enhanced functionality.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It's a pattern for reusing component logic (e.g., authentication, logging). Hooks have largely
+                        replaced HOCs.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>function withAuth(Component) {
+  return function WrappedComponent(props) {
+    if (!props.isAuthenticated) return &lt;Login /&gt;;
+    return &lt;Component {...props} /&gt;;
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 19. Render Props -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">19. What is the Render Props pattern?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A technique for sharing code between components using a prop whose value is a function.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The component calls the prop function to determine what to render. Also largely replaced by
+                        Hooks.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>&lt;DataProvider render={data => (
+  &lt;h1&gt;Hello {data.target}&lt;/h1&gt;
+)} /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 20. React.memo -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">20. What is React.memo?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A Higher-Order Component for memoizing functional components. It prevents re-renders if the props
+                    haven't changed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It performs a shallow comparison of props. You can provide a custom comparison function as a
+                        second argument.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 21. useReducer -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">21. Explain the useReducer Hook.</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An alternative to `useState` for managing complex state logic involving multiple sub-values or when
+                    the next state depends on the previous one.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It works similarly to Redux reducers: <code>(state, action) => newState</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>const [state, dispatch] = useReducer(reducer, initialState);
+
+dispatch({ type: 'increment' });</code></pre>
+                </div>
+            </div>
+
+            <!-- 22. SSR vs CSR -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">22. Difference between SSR and CSR?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CSR (Client-Side Rendering):</strong> Browser downloads empty HTML + JS bundle, then renders
+                    content. <strong>SSR (Server-Side Rendering):</strong> Server sends fully rendered HTML.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>SSR is better for SEO and initial load performance (FCP). CSR provides a smoother interaction
+                        after the initial load.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// CSR (Standard React)
+&lt;div id="root"&gt;&lt;/div&gt;
+&lt;script src="bundle.js"&gt;&lt;/script&gt; // Renders content later
+
+// SSR (Next.js / Remix)
+&lt;div id="root"&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;/div&gt; // Content arrives immediately</code></pre>
+                </div>
+            </div>
+
+            <!-- 23. Next.js -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">23. Why use Next.js?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Next.js is a React framework that provides SSR, Static Site Generation (SSG), file-based routing,
+                    and API routes out of the box.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It solves the configuration headache of setting up SSR manually with React and provides
+                        optimizations like Image and Font optimization.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/page.tsx (Next.js App Router)
+export default function Page() {
+  return &lt;h1&gt;Hello, Next.js!&lt;/h1&gt;;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 24. Testing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">24. How do you test React components?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Commonly using <strong>Jest</strong> (test runner) and <strong>React Testing Library</strong>
+                    (rendering and interaction).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>React Testing Library encourages testing behavior (what the user sees) rather than implementation
+                        details (state/props).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(&lt;App /&gt;);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 25. Key Prop -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">25. Why is the `key` prop important in lists?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Keys help React identify which items have changed, are added, or are removed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Using indexes as keys is discouraged if the list can be reordered, as it can lead to performance
+                        issues and bugs with component state.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Good
+{items.map(item => (
+  &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+))}
+
+// Bad (if list changes order)
+{items.map((item, index) => (
+  &lt;li key={index}&gt;{item.name}&lt;/li&gt;
+))}</code></pre>
+                </div>
+            </div>
+
+            <!-- 26. React Server Components (RSC) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">26. What are React Server Components (RSC)?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Components that render exclusively on the server. They reduce bundle size and allow direct backend
+                    access.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Unlike SSR (which hydrates on the client), RSC code is <strong>never</strong> sent to the client.
+                        This allows you to keep large dependencies (like markdown parsers or database clients) on the
+                        server.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Component (default in Next.js App Router)
+import db from './db';
+
+async function UserList() {
+  const users = await db.query('SELECT * FROM users');
+  return (
+    &lt;ul&gt;
+      {users.map(user => &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 27. Server Actions -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">27. What are Server Actions?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Async functions that run on the server but can be called directly from Client Components (e.g., in
+                    form submissions).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They simplify data mutation by eliminating the need to manually create API endpoints for every
+                        form submission. They integrate with `useFormStatus` and `useFormState`.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Action
+async function createTodo(formData) {
+  'use server';
+  await db.todo.create({ title: formData.get('title') });
+}
+
+// Usage in Component
+&lt;form action={createTodo}&gt;
+  &lt;input name="title" /&gt;
+  &lt;button&gt;Add&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 28. React Compiler -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">28. What is the React Compiler (React Forget)?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An automatic optimization tool that memoizes components and values at build time.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It aims to eliminate the need to manually use `useMemo` and `useCallback` by automatically
+                        understanding the dependency graph of your application.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Before (Manual Optimization)
+const value = useMemo(() => compute(a), [a]);
+
+// After (React Compiler)
+const value = compute(a); // Compiler auto-memoizes this!</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">JavaScript</h1>
+        <div class="chapter-nav-controls">
+            <a href="html-css.html" class="nav-button">← Previous</a>
+            <a href="typescript.html" class="nav-button">Next: TypeScript →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- JavaScript Section -->
+        <section id="javascript" class="chapter">
+            <h3 class="question-title">9. Explain Prototypal Inheritance.</h3>
+            <span class="badge advanced">Advanced</span>
+            </div>
+            <div class="section-label">Simple Explanation</div>
+            <div class="simple-explanation">
+                Objects in JavaScript have a link to a prototype object. When trying to access a property, JS checks the
+                object first, then its prototype, and so on (Prototype Chain).
+            </div>
+            <div class="section-label">Detailed Answer</div>
+            <div class="detailed-answer">
+                <p>Every function has a <code>prototype</code> property. When you create an object using
+                    <code>new Func()</code>, the object's internal <code>[[Prototype]]</code> (exposed as
+                    <code>__proto__</code>) is linked to <code>Func.prototype</code>.</p>
+                <p>ES6 Classes are syntactic sugar over this system.</p>
+            </div>
+            </div>
+
+            <!-- 10. ES6 Features -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. Key features introduced in ES6?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    ES6 (ECMAScript 2015) was a major update. Key features include `let`/`const`, Arrow Functions,
+                    Template Literals, Destructuring, and Classes.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Block Scoping:</strong> `let` and `const`.</li>
+                        <li><strong>Arrow Functions:</strong> Concise syntax and lexical `this`.</li>
+                        <li><strong>Template Literals:</strong> String interpolation with backticks.</li>
+                        <li><strong>Destructuring:</strong> Extracting values from arrays/objects easily.</li>
+                        <li><strong>Default Parameters:</strong> `function(a = 1)`.</li>
+                        <li><strong>Spread/Rest Operator:</strong> `...args`.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 11. Map vs Filter vs Reduce -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Explain map(), filter(), and reduce().</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Higher-order array methods. `map` transforms, `filter` selects, and `reduce` accumulates.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>map:</strong> Returns a new array with the same length, where each element is
+                            transformed.</li>
+                        <li><strong>filter:</strong> Returns a new array with only elements that pass the condition.
+                        </li>
+                        <li><strong>reduce:</strong> Reduces the array to a single value (e.g., sum, object) based on an
+                            accumulator.</li>
+                    </ul>
+                </div>
+                <pre><code>const nums = [1, 2, 3, 4];
+const sum = nums.reduce((acc, curr) => acc + curr, 0); // 10</code></pre>
+            </div>
+
+            <!-- 12. Event Bubbling vs Capturing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What is Event Bubbling and Capturing?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    They describe the order in which event handlers are called when an event occurs on an element nested
+                    inside other elements.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Capturing Phase (Trickling):</strong> The event goes down from the window to the target
+                        element.</p>
+                    <p><strong>Target Phase:</strong> The event reaches the target.</p>
+                    <p><strong>Bubbling Phase:</strong> The event bubbles up from the target to the window.</p>
+                    <p>By default, event listeners trigger in the <em>Bubbling</em> phase. Use
+                        <code>addEventListener(type, listener, true)</code> to listen in the Capturing phase.</p>
+                </div>
+            </div>
+
+            <!-- 13. Debounce vs Throttle -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. Difference between Debounce and Throttle?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Techniques to limit the rate at which a function is executed.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Debounce:</strong> Ensures that a function is not called until a certain amount of time
+                        has passed since the <em>last</em> time it was invoked. (e.g., "Search as you type" - wait until
+                        user stops typing).</p>
+                    <p><strong>Throttle:</strong> Ensures that a function is called at most once in a specified time
+                        period. (e.g., "Scroll event" - update only every 100ms).</p>
+                </div>
+            </div>
+
+            <!-- 14. Deep vs Shallow Copy -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">14. Difference between Shallow and Deep Copy?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A shallow copy copies the object's top-level properties. Nested objects are copied as references. A
+                    deep copy duplicates everything, including nested objects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><strong>Shallow Copy Methods:</strong> <code>Object.assign({}, obj)</code>, Spread operator
+                        <code>{...obj}</code>.</p>
+                    <p><strong>Deep Copy Methods:</strong> <code>JSON.parse(JSON.stringify(obj))</code> (has limitations
+                        with functions/undefined), or <code>structuredClone(obj)</code> (modern standard).</p>
+                </div>
+            </div>
+
+            <!-- 15. == vs === -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">15. Difference between `==` and `===`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    `==` (Loose Equality) performs type coercion before comparison. `===` (Strict Equality) compares
+                    both value and type without coercion.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Always use <code>===</code> to avoid unexpected bugs caused by implicit type conversion.</p>
+                </div>
+                <pre><code>5 == "5"  // true
+5 === "5" // false
+null == undefined // true
+null === undefined // false</code></pre>
+            </div>
+
+            <!-- 16. Null vs Undefined -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">16. Difference between `null` and `undefined`?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    `undefined` means a variable has been declared but not assigned a value. `null` is an assignment
+                    value that represents "no value" or "empty".
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>typeof undefined</code> is "undefined". <code>typeof null</code> is "object" (a historical
+                        bug in JS).</p>
+                </div>
+            </div>
+
+            <!-- 17. Currying -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">17. What is Currying?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Currying is the process of converting a function that takes multiple arguments into a sequence of
+                    functions that each take a single argument.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It helps in creating higher-order functions and partial application.</p>
+                </div>
+                <pre><code>// Normal
+function add(a, b) { return a + b; }
+
+// Curried
+function curriedAdd(a) {
+  return function(b) {
+    return a + b;
+  };
+}
+curriedAdd(5)(10); // 15</code></pre>
+            </div>
+
+            <!-- 18. Generators -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">18. What are Generators?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Functions that can be paused and resumed. They are declared with `function*` and use `yield` to
+                    return values one by one.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>When called, a generator returns an iterator object. You call <code>.next()</code> on the
+                        iterator to execute code until the next <code>yield</code>.</p>
+                </div>
+            </div>
+
+            <!-- 19. Storage -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">19. LocalStorage vs SessionStorage vs Cookies?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Different ways to store data on the client-side.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>LocalStorage:</strong> Persists even after the browser is closed. Stores about
+                            5-10MB.</li>
+                        <li><strong>SessionStorage:</strong> Persists only for the session (until the tab is closed).
+                            Stores about 5MB.</li>
+                        <li><strong>Cookies:</strong> Sent to the server with every HTTP request. Used for
+                            authentication. Stores 4KB.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 20. DOM Manipulation -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">20. How to select elements in the DOM?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using methods like `getElementById`, `querySelector`, etc.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><code>document.getElementById('id')</code>: Fast, selects one element.</li>
+                        <li><code>document.querySelector('.class')</code>: Selects the <em>first</em> match (CSS
+                            selector syntax).</li>
+                        <li><code>document.querySelectorAll('div')</code>: Selects <em>all</em> matches (returns
+                            NodeList).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 21. Memory Leaks -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">21. Common causes of Memory Leaks in JS?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Memory leaks happen when the application holds references to objects that are no longer needed,
+                    preventing the Garbage Collector from freeing up memory.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Common causes:</p>
+                    <ul>
+                        <li><strong>Global variables:</strong> Accidentally creating globals.</li>
+                        <li><strong>Closures:</strong> Holding references to large scopes unnecessarily.</li>
+                        <li><strong>Event Listeners:</strong> Forgetting to remove listeners on unmount (especially in
+                            SPA).</li>
+                        <li><strong>Timers:</strong> Uncleared `setInterval`.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 22. Service Workers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">22. What are Service Workers?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Scripts that run in the background, separate from the web page. They enable features like Offline
+                    support (PWA), Push Notifications, and Background Sync.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>They act as a proxy between the web app and the network. They can intercept network requests and
+                        serve cached responses.</p>
+                </div>
+            </div>
+
+            <!-- 23. Web Workers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">23. What are Web Workers?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Web Workers allow you to run JavaScript code in the background, on a separate thread, to avoid
+                    blocking the main UI thread.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Useful for heavy computations (image processing, large data sorting) that would otherwise freeze
+                        the interface.</p>
+                </div>
+            </div>
+
+            <!-- 24. Strict Mode -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">24. What is "use strict"?</h3>
+                    <span class="badge basic">Basic</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A directive that enforces stricter parsing and error handling in JavaScript code.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>It prevents common mistakes like using undeclared variables, duplicate parameter names, and using
+                        reserved keywords.</p>
+                </div>
+            </div>
+
+            <!-- 25. Modules -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">25. CommonJS vs ES Modules?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CommonJS:</strong> Node.js standard (<code>require</code>). <strong>ES Modules:</strong> Web
+                    standard (<code>import</code>).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>ES Modules are statically analyzable (allowing Tree Shaking) and asynchronous. CommonJS is
+                        dynamic and synchronous.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// CommonJS (Node.js)
+const fs = require('fs');
+module.exports = function() {};
+
+// ES Modules (Modern Web)
+import fs from 'fs';
+export default function() {};</code></pre>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design - Interview Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">System Design</h1>
+        <div class="chapter-nav-controls">
+            <a href="performance.html" class="nav-button">← Previous</a>
+            <a href="leadership.html" class="nav-button">Next: Leadership & Behavioral →</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- System Design Section -->
+        <section id="system-design" class="chapter">
+            <h2 class="chapter-title">Frontend System Design</h2>
+            <!-- 1. Web Performance -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. How do you optimize Web Performance?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Minimizing load time and improving responsiveness. Key metrics are Core Web Vitals (LCP, FID, CLS).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Strategies:</p>
+                    <ul>
+                        <li><strong>Code Splitting:</strong> Load only necessary JS.</li>
+                        <li><strong>Image Optimization:</strong> Use WebP, lazy loading, and proper sizing.</li>
+                        <li><strong>Caching:</strong> Service Workers, HTTP caching headers.</li>
+                        <li><strong>Minification & Compression:</strong> Gzip/Brotli.</li>
+                        <li><strong>CDN:</strong> Serve assets closer to the user.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { getLCP, getFID, getCLS } from 'web-vitals';
+
+getCLS(console.log);
+getFID(console.log);
+getLCP(console.log);</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Security (XSS, CSRF) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. Explain XSS and CSRF and how to prevent them.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>XSS (Cross-Site Scripting):</strong> Injecting malicious scripts. <strong>CSRF (Cross-Site
+                        Request Forgery):</strong> Tricking a user into performing unwanted actions.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Prevent XSS:</strong> Sanitize inputs, use Content Security Policy (CSP), escape
+                            data (React does this by default).</li>
+                        <li><strong>Prevent CSRF:</strong> Use Anti-CSRF tokens, SameSite cookie attribute.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Sanitize HTML before rendering
+import DOMPurify from 'dompurify';
+
+const clean = DOMPurify.sanitize(dirtyInput);
+document.getElementById('div').innerHTML = clean;</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. Micro-frontends -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. What are Micro-frontends?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An architectural style where a frontend app is decomposed into individual, semi-independent
+                    "microapps" working loosely together.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Allows different teams to work on different features independently, potentially using different
+                        tech stacks. Implemented via IFrames, Web Components, or Module Federation (Webpack 5).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Webpack Module Federation
+new ModuleFederationPlugin({
+  name: 'app1',
+  remotes: {
+    app2: 'app2@http://localhost:3002/remoteEntry.js',
+  },
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. CI/CD -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. Explain CI/CD in Frontend Development.</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>CI (Continuous Integration):</strong> Automating tests and builds on every commit.
+                    <strong>CD (Continuous Deployment):</strong> Automating release to production.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>A typical pipeline: Lint -> Unit Tests -> Build -> E2E Tests -> Deploy to Staging -> Deploy to
+                        Production. Tools: GitHub Actions, Jenkins, CircleCI.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code># GitHub Actions Workflow
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm test
+      - run: npm run build</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Testing Strategies -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What is the Testing Pyramid?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A strategy for balancing different types of tests.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Unit Tests (Base):</strong> Fast, cheap, test individual functions/components
+                            (Jest).</li>
+                        <li><strong>Integration Tests (Middle):</strong> Test how components work together.</li>
+                        <li><strong>E2E Tests (Top):</strong> Slow, expensive, test full user flows (Cypress,
+                            Playwright).</li>
+                    </ul>
+                    <p>You should have many unit tests, fewer integration tests, and very few E2E tests.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Unit Test (Jest)
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
+
+// E2E Test (Playwright)
+test('login flow', async ({ page }) => {
+  await page.goto('/login');
+  await page.fill('#username', 'user');
+  await page.click('#submit');
+  await expect(page).toHaveURL('/dashboard');
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. Folder Structure -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. How do you structure a large React application?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Feature-based grouping is generally better than file-type grouping for scalability.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Instead of <code>/components</code>, <code>/actions</code>, <code>/reducers</code>, group by
+                        feature: <code>/features/auth</code>, <code>/features/profile</code>. Each feature folder
+                        contains its own components, slice, and API logic (Colocation).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>src/
+  features/
+    auth/
+      AuthSlice.ts
+      LoginComponent.tsx
+      authAPI.ts
+    products/
+      ProductList.tsx
+      productAPI.ts
+  components/ (Shared)
+    Button.tsx
+  hooks/ (Shared)</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. Authentication -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. JWT vs Session Authentication?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Session:</strong> Server stores state. Client sends cookie ID. <strong>JWT (JSON Web
+                        Token):</strong> Stateless. Client stores token (usually in memory or cookie) and sends it in
+                    header.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>JWT is better for microservices and mobile apps. Session is simpler and easier to invalidate
+                        (logout) on the server side.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// JWT Header
+Authorization: Bearer &lt;token&gt;
+
+// Session Cookie
+Cookie: sessionId=&lt;id&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. CORS -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is CORS?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Cross-Origin Resource Sharing. A security feature that restricts web pages from making requests to a
+                    different domain than the one that served the web page.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The <em>server</em> must send specific headers (<code>Access-Control-Allow-Origin</code>) to
+                        allow the browser to accept the response.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Response Header
+Access-Control-Allow-Origin: https://my-app.com
+Access-Control-Allow-Methods: GET, POST, PUT</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. PWA -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What makes a Progressive Web App (PWA)?</h3>
+                    <span class="badge intermediate">Intermediate</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A web app that behaves like a native app.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Key requirements: HTTPS, Service Worker (offline support), Web App Manifest (installable on home
+                        screen).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// manifest.json
+{
+  "name": "My PWA",
+  "short_name": "PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [...]
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. Accessibility Auditing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. How do you audit a website for Accessibility?</h3>
+                    <span class="badge advanced">Advanced</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Using automated tools and manual testing.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>Automated:</strong> Lighthouse, axe-core, WAVE.</li>
+                        <li><strong>Manual:</strong> Keyboard navigation (Tab key), Screen Readers (NVDA, VoiceOver),
+                            Color Contrast checkers.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// axe-core usage
+import axe from 'axe-core';
+
+axe.run(document, (err, results) => {
+  if (results.violations.length) {
+    console.log('Accessibility violations:', results.violations);
+  }
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 11. Edge Computing -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. Edge Computing vs Cloud Functions?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Cloud Functions:</strong> Run in centralized data centers (e.g., us-east-1). <strong>Edge
+                        Functions:</strong> Run on servers closest to the user (CDN nodes).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Edge functions have lower latency (no cold starts usually) but often have a more limited runtime
+                        environment (e.g., V8 isolate instead of full Node.js).</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Edge Middleware (Next.js)
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  const country = request.geo.country;
+  if (country === 'US') {
+    return NextResponse.rewrite(new URL('/us-home', request.url));
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. Serverless -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. Pros and Cons of Serverless for Frontend?</h3>
+                    <span class="badge advanced">2025 Ready</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    <strong>Pros:</strong> Scalability, pay-per-use, no server management. <strong>Cons:</strong> Cold
+                    starts, vendor lock-in, debugging complexity.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Serverless is ideal for "BFF" (Backend for Frontend) layers in Next.js/Remix apps but requires
+                        careful architectural planning to avoid "function spaghetti".</p>
+                </div>
+            </div>
+        </section>
+
+        
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>
