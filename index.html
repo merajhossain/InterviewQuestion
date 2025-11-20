@@ -5,12 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senior Frontend Interview Preparation 2025</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="description"
+        content="Comprehensive interview preparation for senior frontend engineering roles with 143+ questions">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Interview Prep">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap"
         rel="stylesheet">
+
     <style>
+        /* Existing styles remain the same */
         * {
             margin: 0;
             padding: 0;
@@ -275,47 +294,38 @@
                 <div class="chapter-title">HTML & CSS</div>
                 <div class="chapter-count">17 Questions • Basic to Advanced</div>
             </a>
-
             <a href="chapters/javascript.html" class="chapter-card">
                 <div class="chapter-title">JavaScript</div>
                 <div class="chapter-count">25 Questions • Core Concepts</div>
             </a>
-
             <a href="chapters/typescript.html" class="chapter-card">
                 <div class="chapter-title">TypeScript</div>
                 <div class="chapter-count">10 Questions • Type System Mastery</div>
             </a>
-
             <a href="chapters/react.html" class="chapter-card">
                 <div class="chapter-title">React</div>
                 <div class="chapter-count">28 Questions • Hooks & Patterns</div>
             </a>
-
             <a href="chapters/nextjs.html" class="chapter-card">
                 <div class="chapter-title">Next.js</div>
                 <div class="chapter-count">10 Questions • App Router & SSR</div>
             </a>
-
             <a href="chapters/redux.html" class="chapter-card">
                 <div class="chapter-title">Redux</div>
                 <div class="chapter-count">15 Questions • State Management</div>
             </a>
-
             <a href="chapters/browser-storage.html" class="chapter-card">
                 <div class="chapter-title">Browser Storage & Security</div>
                 <div class="chapter-count">8 Questions • Security Best Practices</div>
             </a>
-
             <a href="chapters/performance.html" class="chapter-card">
                 <div class="chapter-title">Performance & Optimization</div>
                 <div class="chapter-count">8 Questions • Speed & Efficiency</div>
             </a>
-
             <a href="chapters/system-design.html" class="chapter-card">
                 <div class="chapter-title">System Design</div>
                 <div class="chapter-count">12 Questions • Architecture & Patterns</div>
             </a>
-
             <a href="chapters/leadership.html" class="chapter-card">
                 <div class="chapter-title">Leadership & Behavioral</div>
                 <div class="chapter-count">10 Questions • Senior/Lead Level</div>
@@ -326,6 +336,21 @@
             <p>Built with ❤️ for Frontend Engineers • Updated for 2025</p>
         </div>
     </div>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('✅ Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>
