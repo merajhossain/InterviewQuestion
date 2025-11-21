@@ -2,7 +2,7 @@
     "name": "Senior Frontend Interview Preparation 2025",
     "short_name": "Interview Prep",
     "description": "Comprehensive interview preparation for senior frontend engineering roles with 143+ questions",
-    "start_url": "/index.html",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#3b82f6",
@@ -67,5 +67,6 @@
             "sizes": "1280x720",
             "type": "image/png"
         }
-    ]
+    ],
+    "scope": "./"
 }
