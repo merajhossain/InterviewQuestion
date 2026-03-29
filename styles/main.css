@@ -302,3 +302,122 @@ p code {
         font-size: 1.1rem;
     }
 }
+
+/* === 2026 Trending Styles === */
+
+/* Trending badge — pulsing red for hot topics */
+.badge.trending {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.65; }
+}
+
+/* AI Chapter card — purple border highlight */
+.chapter-card--ai {
+    border-color: rgba(168, 85, 247, 0.3);
+}
+
+.chapter-card--ai::before {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+.chapter-card--ai:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+}
+
+/* AI Banner — shown at top of AI chapter */
+.ai-banner {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-banner-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.ai-banner-text h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #c084fc;
+    margin-bottom: 0.25rem;
+}
+
+.ai-banner-text p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* === বাংলা ব্যাখ্যা Section === */
+.bangla-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.bangla-toggle-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.bangla-section {
+    display: none;
+    margin-top: 1rem;
+    background: rgba(16, 185, 129, 0.06);
+    border-left: 4px solid #10b981;
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.bangla-section.open {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.bangla-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.bangla-text {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #cbd5e1;
+    font-family: 'Hind Siliguri', 'SolaimanLipi', 'Kalpurush', 'Inter', sans-serif;
+}
+
+.bangla-text strong {
+    color: #6ee7b7;
+}

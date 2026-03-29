@@ -17,3 +17,12 @@ function scrollToTop() {
         behavior: 'smooth'
     });
 }
+
+// বাংলা ব্যাখ্যা Toggle
+function toggleBangla(btn) {
+    const card = btn.closest('.question-card');
+    const section = card.querySelector('.bangla-section');
+    if (!section) return;
+    const isOpen = section.classList.toggle('open');
+    btn.textContent = isOpen ? '🇧🇩 বাংলা লুকাও' : '🇧🇩 বাংলায় দেখুন';
+}

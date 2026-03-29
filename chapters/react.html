@@ -778,6 +778,231 @@ const value = useMemo(() => compute(a), [a]);
 const value = compute(a); // Compiler auto-memoizes this!</code></pre>
                 </div>
             </div>
+            <!-- 29. use() Hook — React 19 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">29. What is the new <code>use()</code> Hook in React 19?</h3>
+                    <span class="badge advanced">🔥 React 19 / 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A new built-in hook that lets you read the value of a Promise or Context inside a component — including inside conditional blocks (which normal Hooks can't do).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>use()</code> is a new primitive in React 19. Key differences from existing hooks:</p>
+                    <ul>
+                        <li>Can be called <strong>inside loops and conditions</strong> (unlike all other hooks).</li>
+                        <li>When passed a Promise, it <strong>suspends</strong> the component until the Promise resolves, integrating with Suspense.</li>
+                        <li>When passed a Context, it works exactly like <code>useContext()</code>.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// use() with a Promise — integrates with Suspense
+import { use, Suspense } from 'react';
+
+function UserProfile({ userPromise }) {
+  // Suspends if promise is pending, throws if rejected
+  const user = use(userPromise);
+  return &lt;h1&gt;{user.name}&lt;/h1&gt;;
+}
+
+// use() inside a condition (impossible with useState/useContext!)
+function Message({ showGreeting, themePromise }) {
+  if (showGreeting) {
+    const theme = use(ThemeContext); // ✅ Hooks in conditions now OK
+    return &lt;p style={{ color: theme.color }}&gt;Hello!&lt;/p&gt;;
+  }
+  return null;
+}
+
+// Wrapping with Suspense
+&lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+  &lt;UserProfile userPromise={fetchUser(userId)} /&gt;
+&lt;/Suspense&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 30. useOptimistic — React 19 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">30. What is the <code>useOptimistic</code> Hook?</h3>
+                    <span class="badge advanced">🔥 React 19 / 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A hook that lets you show an <strong>optimistically updated state</strong> while an async operation (e.g., a server action) is in progress, automatically reverting if it fails.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Optimistic UI is the pattern where you update the UI <em>immediately</em> before the server confirms the action (like liking a tweet). Previously this required complex manual state management. <code>useOptimistic</code> makes it declarative.</p>
+                    <p>The optimistic value is shown during the async operation. When it completes, React reverts to the actual state returned by the server action.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { useOptimistic } from 'react';
+
+function LikeButton({ post, likePost }) {
+  const [optimisticLikes, addOptimisticLike] = useOptimistic(
+    post.likes,
+    (currentLikes, amount) =&gt; currentLikes + amount
+  );
+
+  async function handleLike() {
+    addOptimisticLike(1); // Immediately show +1 like
+    await likePost(post.id); // Actual server call
+    // On success: state syncs to real value
+    // On failure: React reverts to original post.likes
+  }
+
+  return (
+    &lt;button onClick={handleLike}&gt;
+      ❤️ {optimisticLikes} {/* Shows optimistic count instantly */}
+    &lt;/button&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 31. useFormStatus — React 19 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">31. What is <code>useFormStatus</code> and <code>useActionState</code> in React 19?</h3>
+                    <span class="badge advanced">🔥 React 19 / 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Two new hooks for managing form state with Server Actions. <code>useFormStatus</code> gives you the submission state, and <code>useActionState</code> manages the action's result and state.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <ul>
+                        <li><strong>useFormStatus:</strong> A child component hook that reads the parent <code>&lt;form&gt;</code>'s pending state. Perfect for a reusable <code>&lt;SubmitButton&gt;</code> that auto-disables during submission.</li>
+                        <li><strong>useActionState:</strong> (renamed from <code>useFormState</code>) Manages state returned by a Server Action — current state, action function, and isPending flag.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// useFormStatus — reusable submit button
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+  const { pending } = useFormStatus(); // Reads parent form state
+  return (
+    &lt;button disabled={pending}&gt;
+      {pending ? 'Saving...' : 'Save'}
+    &lt;/button&gt;
+  );
+}
+
+// useActionState — managing server action state
+import { useActionState } from 'react';
+import { updateProfile } from './actions'; // Server Action
+
+function ProfileForm() {
+  const [state, formAction, isPending] = useActionState(updateProfile, {
+    error: null,
+    success: false,
+  });
+
+  return (
+    &lt;form action={formAction}&gt;
+      &lt;input name="username" /&gt;
+      {state.error &amp;&amp; &lt;p className="error"&gt;{state.error}&lt;/p&gt;}
+      {state.success &amp;&amp; &lt;p&gt;Profile updated!&lt;/p&gt;}
+      &lt;SubmitButton /&gt; {/* Auto-disables during submission */}
+    &lt;/form&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 32. React 19 ref as prop -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">32. What changed with <code>ref</code> in React 19?</h3>
+                    <span class="badge advanced">🔥 React 19 / 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    In React 19, <code>ref</code> is now a <strong>regular prop</strong>. You no longer need <code>forwardRef()</code> to pass refs to child components.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p><code>forwardRef</code> was a common pain point — a lot of boilerplate just to pass a ref to a child's DOM element. React 19 eliminates this by treating <code>ref</code> like any other prop.</p>
+                    <p><code>forwardRef</code> still works for backward compatibility but will be deprecated in a future version.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// ❌ React 18 — Required forwardRef wrapper
+const InputV18 = React.forwardRef((props, ref) =&gt; (
+  &lt;input ref={ref} {...props} /&gt;
+));
+
+// ✅ React 19 — ref is just a prop, no wrapper needed!
+function Input({ ref, ...props }) {
+  return &lt;input ref={ref} {...props} /&gt;;
+}
+
+// Usage
+function Form() {
+  const inputRef = useRef(null);
+
+  return (
+    &lt;form&gt;
+      &lt;Input ref={inputRef} name="email" /&gt; {/* Works directly! */}
+    &lt;/form&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 33. Suspense in React 19 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">33. How does Suspense work with async components in React 19?</h3>
+                    <span class="badge advanced">🔥 React 19 / 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    React 19 allows <strong>async client components</strong> (not just server components). Combined with <code>Suspense</code>, you can write simple <code>async</code>/<code>await</code> in components and React handles the loading state automatically.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The combination of <code>use()</code> + <code>Suspense</code> + async Server Components enables a much simpler data-fetching model:</p>
+                    <ul>
+                        <li><strong>No more useEffect + useState for data fetching</strong> in RSC.</li>
+                        <li><strong>Streaming HTML:</strong> The server streams HTML to the browser as data resolves, showing fallback UI in the meantime.</li>
+                        <li><strong>Error boundaries:</strong> Pair with <code>&lt;ErrorBoundary&gt;</code> to handle Promise rejections gracefully.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Server Component (RSC) — directly async, zero boilerplate
+async function UserDashboard({ userId }) {
+  // No useEffect needed — just await directly!
+  const user = await fetchUser(userId);
+  const posts = await fetchUserPosts(userId);
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Welcome, {user.name}!&lt;/h1&gt;
+      &lt;PostList posts={posts} /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Streaming with nested Suspense boundaries
+export default function Page({ params }) {
+  return (
+    &lt;Suspense fallback={&lt;ProfileSkeleton /&gt;}&gt;
+      &lt;UserDashboard userId={params.id} /&gt;
+
+      {/* This Suspense resolves independently — parallel streaming! */}
+      &lt;Suspense fallback={&lt;CommentsSkeleton /&gt;}&gt;
+        &lt;Comments userId={params.id} /&gt;
+      &lt;/Suspense&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
         </section>
 
         

@@ -306,6 +306,143 @@ export async function createTodo(formData: FormData) {
 }</code></pre>
                 </div>
             </div>
+
+            <!-- 11. Partial Pre-rendering (PPR) -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. What is Partial Pre-rendering (PPR) in Next.js 15?</h3>
+                    <span class="badge advanced">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    PPR lets you render <strong>part of a page statically</strong> (instant, from CDN) and <strong>stream dynamic parts</strong> (personalized content) — all in a single request. The best of both static and dynamic.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Previously you had to choose: fully static (fast, not personalized) OR fully dynamic (slower, personalized). PPR eliminates this trade-off.</p>
+                    <p>The static shell (layout, navigation) is served instantly from CDN. Dynamic holes (user name, recommendations) stream in via <code>Suspense</code> boundaries — all in one HTTP request.</p>
+                    <p>Enable with: <code>experimental: { ppr: true }</code> in <code>next.config.js</code>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// next.config.js
+module.exports = {
+  experimental: { ppr: true }, // Enable PPR
+};
+
+// app/page.tsx — Static shell + dynamic Suspense holes
+import { Suspense } from 'react';
+import { UserGreeting } from './UserGreeting'; // Dynamic (personalized)
+import { StaticHero } from './StaticHero';     // Static (from CDN instantly)
+
+export default function Page() {
+  return (
+    &lt;main&gt;
+      {/* Served immediately from CDN edge */}
+      &lt;StaticHero /&gt;
+      &lt;StaticNavigation /&gt;
+
+      {/* Streams in after — personalized, dynamic */}
+      &lt;Suspense fallback={&lt;GreetingSkeleton /&gt;}&gt;
+        &lt;UserGreeting /&gt; {/* Reads cookies, hits DB */}
+      &lt;/Suspense&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. Turbopack -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. What is Turbopack and how does it improve Next.js dev experience?</h3>
+                    <span class="badge advanced">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Turbopack is a Rust-based bundler that replaces Webpack in Next.js. It's dramatically faster for local development — up to <strong>10x faster</strong> builds than Webpack.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Turbopack became stable for <code>next dev</code> in Next.js 15. Key advantages:</p>
+                    <ul>
+                        <li><strong>Incremental computation:</strong> Only rebuilds what changed — caches at the function level.</li>
+                        <li><strong>Rust-powered:</strong> Multi-threaded, memory-safe, extremely fast cold start.</li>
+                        <li><strong>HMR (Hot Module Replacement):</strong> Near-instant updates — even on large apps with thousands of modules.</li>
+                        <li><strong>Still Webpack for production:</strong> <code>next build</code> still uses Webpack/SWC in stable versions.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code># Enable Turbopack for dev (stable in Next.js 15)
+next dev --turbopack
+
+# Or in package.json
+{
+  "scripts": {
+    "dev": "next dev --turbopack"
+  }
+}
+
+# next.config.js — Custom Turbopack config
+module.exports = {
+  turbopack: {
+    resolveAlias: {
+      // Custom module aliases
+      '@components': './src/components',
+    },
+    rules: {
+      // Custom file loaders
+      '*.svg': { loaders: ['@svgr/webpack'], as: '*.js' },
+    },
+  },
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- 13. next/after -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">13. What is <code>unstable_after</code> in Next.js 15?</h3>
+                    <span class="badge advanced">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A new Next.js API that lets you run code <strong>after a response is sent</strong> — without blocking the user. Perfect for analytics logging, sending emails, or other side effects.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Previously, any code you wanted to run after a request (like logging analytics) would either block the response or require a separate background job service. <code>after()</code> solves this elegantly.</p>
+                    <p>The response streams to the user immediately. The <code>after()</code> callback runs <em>after</em> the response is fully sent, without delaying the user.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { unstable_after as after } from 'next/server';
+import { log } from '@/lib/analytics';
+
+export default async function Page({ params }) {
+  // This data fetching blocks until ready (for the user)
+  const product = await fetchProduct(params.id);
+
+  // Log analytics AFTER response is sent — user isn't waiting!
+  after(async () => {
+    await log({ event: 'product_view', productId: params.id });
+    await sendViewNotification(product.sellerId);
+  });
+
+  return &lt;ProductPage product={product} /&gt;;
+}
+
+// Also works in Route Handlers and Server Actions
+export async function POST(req: Request) {
+  const data = await req.json();
+  const result = await processOrder(data);
+
+  after(async () => {
+    await sendOrderConfirmationEmail(data.email); // Non-blocking!
+  });
+
+  return Response.json({ success: true, orderId: result.id });
+}</code></pre>
+                </div>
+            </div>
         </section>
 
         

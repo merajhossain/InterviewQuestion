@@ -388,7 +388,126 @@ export default function() {};</code></pre>
             </div>
         </section>
 
-        
+
+            <!-- 26. Object.groupBy — ES2024 -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">26. What are <code>Object.groupBy()</code> and <code>Map.groupBy()</code>?</h3>
+                    <span class="badge advanced">🔥 ES2024 / Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Native JavaScript methods (no more Lodash!) to group array elements by a key. Returns an object or Map where keys are group names and values are arrays of matching items.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Introduced in ES2024, these replace the verbose <code>reduce()</code> pattern you used to need for grouping. Now supported in all modern browsers and Node.js 21+.</p>
+                    <ul>
+                        <li><code>Object.groupBy()</code> — groups into a plain object (keys must be strings/symbols).</li>
+                        <li><code>Map.groupBy()</code> — groups into a Map (keys can be any value, including objects).</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>const products = [
+  { name: 'Phone', category: 'Electronics' },
+  { name: 'Laptop', category: 'Electronics' },
+  { name: 'Shirt', category: 'Clothing' },
+  { name: 'Jeans', category: 'Clothing' },
+];
+
+// ES2024 — Clean grouping
+const grouped = Object.groupBy(products, ({ category }) =&gt; category);
+// { Electronics: [phone, laptop], Clothing: [shirt, jeans] }
+
+// Map.groupBy — supports object keys
+const byLength = Map.groupBy(products, ({ name }) =&gt; name.length);
+
+// Old way (ES5) — much more verbose
+const oldGrouped = products.reduce((acc, item) =&gt; {
+  (acc[item.category] = acc[item.category] || []).push(item);
+  return acc;
+}, {});</code></pre>
+                </div>
+            </div>
+
+            <!-- 27. Promise.withResolvers -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">27. What is <code>Promise.withResolvers()</code>?</h3>
+                    <span class="badge advanced">🔥 ES2024 / Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A new way to create a Promise that exposes its <code>resolve</code> and <code>reject</code> functions outside the constructor, making it much cleaner to work with "deferred" patterns.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Before <code>Promise.withResolvers()</code>, creating a "deferred" promise required a clunky pattern where you'd assign <code>resolve</code>/<code>reject</code> to outer variables. This is now built into the language.</p>
+                    <p>Extremely useful for: event-driven code, WebSocket message waiting, modal confirm dialogs, and custom async control flow.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// ❌ Old deferred pattern — ugly!
+let resolve, reject;
+const promise = new Promise((res, rej) =&gt; {
+  resolve = res; reject = rej; // Capture from outer scope
+});
+setTimeout(() =&gt; resolve('done'), 1000);
+
+// ✅ ES2024 — Clean and readable
+const { promise, resolve, reject } = Promise.withResolvers();
+setTimeout(() =&gt; resolve('done'), 1000);
+const result = await promise; // 'done'
+
+// Real-world use case: awaitable confirmation dialog
+function createConfirmDialog(message) {
+  const { promise, resolve } = Promise.withResolvers();
+  showModal({ message, onConfirm: () =&gt; resolve(true), onCancel: () =&gt; resolve(false) });
+  return promise; // Caller can await this!
+}
+
+const confirmed = await createConfirmDialog('Delete this item?');
+if (confirmed) await deleteItem(id);</code></pre>
+                </div>
+            </div>
+
+            <!-- 28. Top-level await -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">28. What is Top-Level <code>await</code> and where is it used?</h3>
+                    <span class="badge intermediate">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The ability to use <code>await</code> at the top level of an ES Module — outside of any <code>async</code> function. Modules that use it will pause other modules from importing them until the async operation completes.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Top-level <code>await</code> works only in ES Modules (<code>type: "module"</code>). It's now widely used in:</p>
+                    <ul>
+                        <li><strong>Next.js Server Components:</strong> Direct <code>await</code> in component bodies (RSC).</li>
+                        <li><strong>Module initialization:</strong> Fetching config, connecting to DBs before exporting.</li>
+                        <li><strong>Dynamic imports:</strong> Conditionally load modules based on async conditions.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// config.js — ES Module with top-level await
+const config = await fetch('/api/config').then(r =&gt; r.json());
+export default config; // Other modules wait for this!
+
+// db.js — Initialize once at module load
+const pool = await createPool(process.env.DATABASE_URL);
+export { pool };
+
+// Dynamic conditional import
+const isProd = process.env.NODE_ENV === 'production';
+const { analytics } = await import(
+  isProd ? './analytics.prod.js' : './analytics.dev.js'
+);
+analytics.init();</code></pre>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Back to Top Button -->

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Integration - Interview Prep 2026</title>
+    <meta name="description" content="Trending 2026 interview questions on AI/LLM integration in frontend development including Vercel AI SDK, RAG, streaming, and AI-powered UX patterns.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav">
+        <a href="../index.html" class="chapter-nav-home">← Home</a>
+        <h1 class="chapter-nav-title">🤖 AI & LLM Integration</h1>
+        <div class="chapter-nav-controls">
+            <a href="leadership.html" class="nav-button">← Previous</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="ai-integration" class="chapter">
+            <h2 class="chapter-title">AI & LLM Integration <span style="font-size: 1rem; color: #f87171; font-weight: 500;">🔥 2026 Hot Topic</span></h2>
+
+            <div class="ai-banner">
+                <div class="ai-banner-icon">🚀</div>
+                <div class="ai-banner-text">
+                    <h3>Why These Questions Matter in 2026</h3>
+                    <p>AI integration is now a top requirement at senior frontend roles. Expect questions about Vercel AI SDK, RAG pipelines, streaming UIs, and responsible AI patterns.</p>
+                </div>
+            </div>
+
+            <!-- 1. Vercel AI SDK -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">1. What is the Vercel AI SDK and how do you use it?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    An open-source SDK that makes it easy to build AI-powered streaming UIs in React and Next.js applications using providers like OpenAI, Anthropic, and Google.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The Vercel AI SDK provides three core layers:</p>
+                    <ul>
+                        <li><strong>AI SDK Core:</strong> Unified API for calling LLMs — <code>generateText</code>, <code>streamText</code>, <code>generateObject</code>.</li>
+                        <li><strong>AI SDK UI:</strong> React hooks — <code>useChat</code>, <code>useCompletion</code> — for streaming responses into the UI.</li>
+                        <li><strong>AI SDK RSC:</strong> Server-side streaming with React Server Components using <code>streamUI</code>.</li>
+                    </ul>
+                    <p>It abstracts provider differences so you can switch between OpenAI, Anthropic, and Google Gemini with a single line change.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/api/chat/route.ts (Next.js Route Handler)
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+  const result = await streamText({
+    model: openai('gpt-4o'),
+    messages,
+  });
+  return result.toDataStreamResponse();
+}
+
+// components/Chat.tsx (Client Component)
+'use client';
+import { useChat } from 'ai/react';
+
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  return (
+    &lt;div&gt;
+      {messages.map(m =&gt; (
+        &lt;div key={m.id}&gt;{m.role}: {m.content}&lt;/div&gt;
+      ))}
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input value={input} onChange={handleInputChange} /&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 2. Streaming UI -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">2. How do you implement a streaming AI response in React?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Streaming means the AI response arrives token-by-token, shown incrementally in the UI — exactly like ChatGPT typing effect. This is done via the Fetch API's <code>ReadableStream</code>.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>The server sends a <code>text/event-stream</code> or chunked response. The client reads it via a <code>ReadableStream</code> decoder. Key concepts:</p>
+                    <ul>
+                        <li><strong>Server-Sent Events (SSE):</strong> The traditional way to stream server data to client.</li>
+                        <li><strong>ReadableStream:</strong> A Web API for reading streamed data chunk-by-chunk.</li>
+                        <li><strong>React Suspense + RSC:</strong> Allows streaming HTML from server to client in Next.js App Router.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Manual streaming with Fetch API
+async function streamResponse(prompt: string) {
+  const response = await fetch('/api/generate', {
+    method: 'POST',
+    body: JSON.stringify({ prompt }),
+  });
+
+  const reader = response.body?.getReader();
+  const decoder = new TextDecoder();
+
+  while (true) {
+    const { done, value } = await reader!.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    // Update UI incrementally
+    setOutput(prev =&gt; prev + chunk);
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 3. RAG -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">3. What is RAG (Retrieval-Augmented Generation) and why is it important?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    RAG is a technique where you first <strong>retrieve</strong> relevant documents from a database (vector search), then <strong>inject</strong> them into the LLM prompt so the AI answers based on your private data.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>RAG solves two major LLM problems: <strong>hallucinations</strong> (making up facts) and <strong>knowledge cutoff</strong> (not knowing recent data).</p>
+                    <p>The typical RAG pipeline:</p>
+                    <ol>
+                        <li><strong>Embed:</strong> Convert user query into a vector using an embedding model.</li>
+                        <li><strong>Search:</strong> Find similar vectors in a vector database (Pinecone, pgvector, Weaviate).</li>
+                        <li><strong>Augment:</strong> Inject retrieved documents as context into the LLM prompt.</li>
+                        <li><strong>Generate:</strong> LLM generates grounded answer based on the retrieved context.</li>
+                    </ol>
+                </div>
+                <div class="code-example">
+                    <pre><code>// RAG pipeline with Vercel AI SDK
+import { openai } from '@ai-sdk/openai';
+import { embed, generateText } from 'ai';
+
+async function ragAnswer(userQuestion: string) {
+  // Step 1: Embed the question
+  const { embedding } = await embed({
+    model: openai.embedding('text-embedding-3-small'),
+    value: userQuestion,
+  });
+
+  // Step 2: Retrieve relevant docs from vector DB
+  const relevantDocs = await vectorDB.search(embedding, { topK: 5 });
+
+  // Step 3: Augment prompt with retrieved context
+  const context = relevantDocs.map(d =&gt; d.content).join('\n');
+
+  // Step 4: Generate grounded answer
+  const { text } = await generateText({
+    model: openai('gpt-4o'),
+    prompt: `Context:\n${context}\n\nQuestion: ${userQuestion}`,
+  });
+
+  return text;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 4. AI SDK RSC / generativeUI -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">4. What is Generative UI and AI SDK RSC?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Generative UI allows the AI to render actual React components, not just text. The LLM decides which UI components to show based on the user's query.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Instead of returning a string like "Here is the weather: 25°C", the AI can return a rendered <code>&lt;WeatherCard temperature={25} /&gt;</code> React component. This enables richer, interactive AI responses.</p>
+                    <p>Implemented via <code>streamUI</code> from <code>ai/rsc</code> in Next.js. The AI uses <strong>tool calls</strong> (function calling) to decide which component to render.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// app/actions.tsx — Generative UI with streamUI
+'use server';
+import { streamUI } from 'ai/rsc';
+import { openai } from '@ai-sdk/openai';
+import { WeatherCard } from '@/components/WeatherCard';
+import { z } from 'zod';
+
+export async function getWeather(city: string) {
+  const result = await streamUI({
+    model: openai('gpt-4o'),
+    prompt: `Get weather for ${city}`,
+    tools: {
+      showWeather: {
+        description: 'Show a weather card',
+        parameters: z.object({ temp: z.number(), city: z.string() }),
+        generate: async ({ temp, city }) =&gt; (
+          &lt;WeatherCard temperature={temp} city={city} /&gt;
+        ),
+      },
+    },
+  });
+  return result.value;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 5. Prompt Engineering -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">5. What is Prompt Engineering and what techniques matter most?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    The craft of designing inputs (prompts) to get the best outputs from an LLM. Like writing precise instructions for a very intelligent but literal assistant.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Key techniques for frontend engineers building AI features:</p>
+                    <ul>
+                        <li><strong>System Prompt:</strong> Set the AI's persona, constraints, and output format.</li>
+                        <li><strong>Few-Shot Prompting:</strong> Give 2-3 examples in the prompt to demonstrate the expected format.</li>
+                        <li><strong>Chain-of-Thought:</strong> Ask the AI to "think step by step" for complex reasoning.</li>
+                        <li><strong>Structured Output:</strong> Use <code>generateObject</code> with Zod schema to get typed JSON instead of free text.</li>
+                        <li><strong>Temperature:</strong> Lower (0–0.3) for factual tasks, higher (0.7–1.0) for creative tasks.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Structured Output — get typed JSON from AI
+import { generateObject } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+const { object } = await generateObject({
+  model: openai('gpt-4o'),
+  schema: z.object({
+    sentiment: z.enum(['positive', 'negative', 'neutral']),
+    score: z.number().min(0).max(100),
+    summary: z.string().max(200),
+  }),
+  prompt: 'Analyze sentiment: "The product is amazing but shipping was slow."',
+});
+
+// object is fully typed: { sentiment: 'positive', score: 72, summary: '...' }
+console.log(object.sentiment);</code></pre>
+                </div>
+            </div>
+
+            <!-- 6. AI Tool Calling -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">6. What is Tool Calling (Function Calling) in LLMs?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A way for LLMs to request execution of specific functions. Instead of guessing, the AI says "call the <code>getWeather(city)</code> function" and your code executes it, then returns the result to the AI.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Tool calling enables AI <strong>agents</strong> — autonomous systems that can take actions, not just generate text. This is the foundation of AI copilots and agentic workflows.</p>
+                    <p>The flow: User asks → AI decides which tool to call → Your code runs the tool → Result sent back to AI → AI generates final response.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>import { generateText, tool } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+const { text } = await generateText({
+  model: openai('gpt-4o'),
+  tools: {
+    getWeather: tool({
+      description: 'Get current weather for a city',
+      parameters: z.object({ city: z.string() }),
+      execute: async ({ city }) =&gt; {
+        // Your actual API call
+        const data = await fetch(`/api/weather?city=${city}`).then(r =&gt; r.json());
+        return data;
+      },
+    }),
+  },
+  prompt: 'What is the weather in Tokyo?',
+  maxSteps: 3, // Allow multi-step tool use
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- 7. AI UX Patterns -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">7. What are the best UX patterns for AI-powered features?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    AI interfaces require special UX patterns because responses are non-deterministic, slow, and can fail. Good AI UX handles these gracefully.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Essential AI UX patterns for senior frontend engineers:</p>
+                    <ul>
+                        <li><strong>Progressive Disclosure:</strong> Stream tokens as they arrive — don't make users wait for the full response.</li>
+                        <li><strong>Optimistic UI + Abort:</strong> Allow users to cancel in-progress generations with <code>AbortController</code>.</li>
+                        <li><strong>Skeleton Loading States:</strong> Show structured placeholders while AI generates.</li>
+                        <li><strong>Error Recovery:</strong> Handle rate limits, timeouts, and hallucinations with retry logic.</li>
+                        <li><strong>Human-in-the-Loop:</strong> Always allow users to edit, regenerate, or reject AI output.</li>
+                        <li><strong>Disclaimer/Attribution:</strong> Inform users when content is AI-generated (EU AI Act compliance).</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Abort an in-progress AI stream
+const { stop, isLoading, messages } = useChat();
+
+return (
+  &lt;div&gt;
+    {messages.map(m =&gt; &lt;Message key={m.id} {...m} /&gt;)}
+
+    {isLoading &amp;&amp; (
+      &lt;div className="streaming-indicator"&gt;
+        &lt;span&gt;AI is thinking...&lt;/span&gt;
+        &lt;button onClick={stop}&gt;⏹ Stop&lt;/button&gt;
+      &lt;/div&gt;
+    )}
+  &lt;/div&gt;
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- 8. Vector Databases -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">8. What is a Vector Database and when do you need one?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    A database optimized for storing and searching <strong>embeddings</strong> — numeric representations of text/images. Used to find semantically similar content (e.g., "find all documents about React hooks").
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Traditional databases search by exact match. Vector databases search by <strong>semantic similarity</strong> using cosine distance or dot product.</p>
+                    <p>Use cases in frontend apps:</p>
+                    <ul>
+                        <li><strong>Semantic Search:</strong> Search your docs/products by meaning, not keywords.</li>
+                        <li><strong>RAG:</strong> Find relevant context documents to inject into AI prompts.</li>
+                        <li><strong>Recommendation Engine:</strong> Find similar items based on content embeddings.</li>
+                    </ul>
+                    <p>Popular options: <strong>Pinecone</strong>, <strong>Supabase pgvector</strong>, <strong>Weaviate</strong>, <strong>Qdrant</strong>.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// pgvector with Supabase — semantic search
+import { createClient } from '@supabase/supabase-js';
+import { embed } from 'ai';
+import { openai } from '@ai-sdk/openai';
+
+const supabase = createClient(URL, KEY);
+
+async function semanticSearch(query: string) {
+  // Convert query to embedding vector
+  const { embedding } = await embed({
+    model: openai.embedding('text-embedding-3-small'),
+    value: query,
+  });
+
+  // Find similar documents using cosine similarity
+  const { data } = await supabase.rpc('match_documents', {
+    query_embedding: embedding,
+    match_threshold: 0.78,
+    match_count: 10,
+  });
+
+  return data;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 9. Edge AI -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">9. What is On-Device / Edge AI and why is it growing in 2026?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Running AI models directly in the browser (WebAssembly / WebGPU) or on-device, without sending data to a cloud API. Privacy-first and offline-capable.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Powered by new browser APIs and compact models (e.g., Llama, Phi-3 Mini, Gemini Nano):</p>
+                    <ul>
+                        <li><strong>WebGPU:</strong> GPU-accelerated computation in the browser — enables running small LLMs locally.</li>
+                        <li><strong>Transformers.js:</strong> Hugging Face library for running models in-browser with WebAssembly.</li>
+                        <li><strong>Chrome Built-in AI:</strong> Chrome's experimental Prompt API using Gemini Nano — no API key needed.</li>
+                        <li><strong>Benefits:</strong> Zero latency, no API costs, full privacy (data never leaves device).</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Chrome Built-in AI API (experimental, 2026)
+// Runs Gemini Nano entirely in the browser
+if ('ai' in globalThis &amp;&amp; 'languageModel' in globalThis.ai) {
+  const session = await globalThis.ai.languageModel.create({
+    systemPrompt: 'You are a helpful coding assistant.',
+  });
+
+  const stream = await session.promptStreaming('Explain async/await');
+
+  for await (const chunk of stream) {
+    setOutput(prev =&gt; prev + chunk); // Stream output to UI
+  }
+
+  session.destroy(); // Clean up
+}
+
+// Transformers.js — run any Hugging Face model in browser
+import { pipeline } from '@xenova/transformers';
+
+const classifier = await pipeline('sentiment-analysis');
+const result = await classifier('I love React!'); // Runs 100% in browser
+// [{ label: 'POSITIVE', score: 0.9998 }]</code></pre>
+                </div>
+            </div>
+
+            <!-- 10. AI Ethics & Responsible AI -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">10. How do you build responsible, safe AI-powered UIs?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Responsible AI means preventing harm, bias, and misuse — it's not just ethical, it's becoming a legal requirement (EU AI Act, effective 2026).
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Key responsibilities for frontend engineers building AI features:</p>
+                    <ul>
+                        <li><strong>Rate Limiting:</strong> Prevent API abuse with per-user request limits and cost controls.</li>
+                        <li><strong>Content Moderation:</strong> Use OpenAI Moderation API or similar to filter harmful inputs/outputs before displaying.</li>
+                        <li><strong>Transparency:</strong> Label AI-generated content clearly (EU AI Act Article 50 requirement).</li>
+                        <li><strong>Guardrails:</strong> System prompts should restrict scope (e.g., "Only answer about our product").</li>
+                        <li><strong>Data Privacy:</strong> Anonymize PII before sending to LLM APIs. Never send raw user data to third parties without consent.</li>
+                        <li><strong>Fallback UX:</strong> Always have a non-AI fallback path for when AI fails or is unavailable.</li>
+                    </ul>
+                </div>
+                <div class="code-example">
+                    <pre><code>// Input moderation before calling LLM
+import OpenAI from 'openai';
+
+const openai = new OpenAI();
+
+async function safeGenerate(userMessage: string) {
+  // Step 1: Check for policy violations
+  const moderation = await openai.moderations.create({
+    input: userMessage,
+  });
+
+  if (moderation.results[0].flagged) {
+    return {
+      error: 'Message flagged for inappropriate content.',
+      categories: moderation.results[0].categories,
+    };
+  }
+
+  // Step 2: Proceed with generation (with system guardrails)
+  const result = await streamText({
+    model: openai('gpt-4o'),
+    system: `
+      You are a helpful customer support assistant for Acme Corp.
+      ONLY answer questions about Acme's products and services.
+      If asked about anything unrelated, politely decline.
+      Never reveal confidential business information.
+    `,
+    messages: [{ role: 'user', content: userMessage }],
+  });
+
+  return result;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- 11. AI Agents -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">11. What are AI Agents and how do you build one on the frontend?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    AI Agents are LLM-powered systems that can autonomously plan, use tools, and execute multi-step tasks to achieve a goal — like a smart assistant that can search the web, read files, and write code.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>Key components of an AI Agent:</p>
+                    <ul>
+                        <li><strong>Brain (LLM):</strong> The model that plans and reasons (GPT-4o, Claude 3.7).</li>
+                        <li><strong>Memory:</strong> Conversation history + vector store for long-term memory.</li>
+                        <li><strong>Tools:</strong> Functions the agent can call (search, API calls, code execution).</li>
+                        <li><strong>Orchestration:</strong> Loop that runs: Perceive → Think → Act → Observe.</li>
+                    </ul>
+                    <p>The Vercel AI SDK's <code>maxSteps</code> parameter controls agent loops. Each "step" is one LLM call + tool execution.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// A simple multi-step AI Agent
+import { generateText, tool } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+const { text, steps } = await generateText({
+  model: openai('gpt-4o'),
+  maxSteps: 10, // Allow up to 10 tool-use loops
+  tools: {
+    searchWeb: tool({
+      description: 'Search the web for information',
+      parameters: z.object({ query: z.string() }),
+      execute: async ({ query }) =&gt; searchAPI(query),
+    }),
+    writeCode: tool({
+      description: 'Write and execute JavaScript code',
+      parameters: z.object({ code: z.string() }),
+      execute: async ({ code }) =&gt; executeSandbox(code),
+    }),
+    readFile: tool({
+      description: 'Read a file from the project',
+      parameters: z.object({ path: z.string() }),
+      execute: async ({ path }) =&gt; fs.readFile(path, 'utf-8'),
+    }),
+  },
+  prompt: 'Search for React 19 release notes and summarize the key features.',
+});
+
+// Agent autonomously decides: search → read results → generate summary
+console.log(`Completed in ${steps.length} steps:`, text);</code></pre>
+                </div>
+            </div>
+
+            <!-- 12. useLLM Hook Pattern -->
+            <div class="question-card">
+                <div class="question-header">
+                    <h3 class="question-title">12. How do you design reusable React hooks for AI features?</h3>
+                    <span class="badge trending">🔥 Trending 2026</span>
+                </div>
+                <div class="section-label">Simple Explanation</div>
+                <div class="simple-explanation">
+                    Just like any complex logic in React, AI interactions should be abstracted into custom hooks for reusability, testability, and separation of concerns.
+                </div>
+                <div class="section-label">Detailed Answer</div>
+                <div class="detailed-answer">
+                    <p>A well-designed AI hook should handle: loading states, error states, streaming, abort signals, and retry logic. It should expose a clean, composable API to components.</p>
+                    <p>Think of it as wrapping <code>useChat</code> or <code>useCompletion</code> with your business-specific logic (system prompt, model config, error handling) so components stay clean.</p>
+                </div>
+                <div class="code-example">
+                    <pre><code>// hooks/useProductRecommendation.ts
+import { useCompletion } from 'ai/react';
+import { useCallback } from 'react';
+
+interface UseProductRecommendationOptions {
+  category: string;
+  budget: number;
+}
+
+export function useProductRecommendation({ category, budget }: UseProductRecommendationOptions) {
+  const { completion, isLoading, error, complete, stop } = useCompletion({
+    api: '/api/recommend',
+    onError: (err) =&gt; console.error('Recommendation failed:', err),
+  });
+
+  const getRecommendation = useCallback(async (userQuery: string) =&gt; {
+    await complete(`Category: ${category}, Budget: $${budget}. Query: ${userQuery}`);
+  }, [category, budget, complete]);
+
+  return {
+    recommendation: completion,
+    isGenerating: isLoading,
+    error,
+    getRecommendation,
+    cancelRecommendation: stop,
+  };
+}
+
+// Usage in component — clean and testable!
+function ProductSearch() {
+  const { recommendation, isGenerating, getRecommendation } = useProductRecommendation({
+    category: 'laptops',
+    budget: 1500,
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; getRecommendation('best for video editing')}&gt;
+        Get AI Recommendation
+      &lt;/button&gt;
+      {isGenerating &amp;&amp; &lt;Spinner /&gt;}
+      {recommendation &amp;&amp; &lt;RecommendationCard text={recommendation} /&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script src="../scripts/main.js"></script>
+</body>
+
+</html>
